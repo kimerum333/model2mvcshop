@@ -1,6 +1,8 @@
 package com.model2.mvc.view.product;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,9 +11,6 @@ import com.model2.mvc.common.SearchVO;
 import com.model2.mvc.framework.Action;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.product.impl.ProductServiceImpl;
-import com.model2.mvc.service.purchase.PurchaseService;
-import com.model2.mvc.service.purchase.impl.PurchaseServiceImpl;
-import com.model2.mvc.service.purchase.vo.PurchaseVO;
 
 public class ListProductAction extends Action {
 	@Override
@@ -39,21 +38,12 @@ public class ListProductAction extends Action {
 		searchVO.setPageUnit(Integer.parseInt(pageUnit));
 		
 		ProductService service=new ProductServiceImpl(); 
-		HashMap<String,Object> map=service.getProductList(searchVO);
-		
-		//purchase 쪽에서 추가되는 protrancode 확보 로직
-		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
-		PurchaseService purchaseService = new PurchaseServiceImpl();
-		PurchaseVO purchaseVO = purchaseService.getPurchase(prodNo);
-		String proTranCode = purchaseVO.getPurchaseProd().getProTranCode();
-		//protrancode 확보 끝
-		
+		HashMap<String,Object> map=service.getProductList(searchVO);		
 		
 		request.setAttribute("map", map);
 		request.setAttribute("searchVO", searchVO);
 		request.setAttribute("menu", menu);
-		request.setAttribute("proTranCode", proTranCode);
-		//TODO purchase DAO를 만져서 제대로 proTranCode를 심는지 확인해야한다.
+
 		
 		
 		

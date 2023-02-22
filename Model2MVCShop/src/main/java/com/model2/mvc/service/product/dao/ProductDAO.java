@@ -67,18 +67,21 @@ public class ProductDAO {
 		
 		Connection con = DBUtil.getConnection();
 		
-		String sql = "select * from PRODUCT ";
-		if (searchVO.getSearchCondition() != null) {
+		String sql = "select p.prod_no, p.prod_name, p.prod_detail, p.manufacture_day, p.price, p.image_file, p.reg_date, t.tran_status_code from product p, transaction t ";
+		if (searchVO.getSearchCondition() != null) {//searchCondition이 존재함.
 			if (searchVO.getSearchCondition().equals("0")) {//상품번호
-				sql += " where PROD_NO='" + searchVO.getSearchKeyword()
+				sql += " where p.PROD_NO='" + searchVO.getSearchKeyword()
 						+ "'";
 			} else if (searchVO.getSearchCondition().equals("1")) {//상품명
-				sql += " where PROD_NAME='" + searchVO.getSearchKeyword()
+				sql += " where p.PROD_NAME='" + searchVO.getSearchKeyword()
 						+ "'";
 			} else if (searchVO.getSearchCondition().equals("2")) {//상품가격
-				sql += " where PRICE='" + searchVO.getSearchKeyword()
+				sql += " where p.PRICE='" + searchVO.getSearchKeyword()
 				+ "'";
 			}
+			sql += " AND p.prod_no = t.prod_no(+)";
+		}else{
+			sql += " WHERE p.prod_no = t.prod_no(+)";
 		}
 		sql += " order by PROD_NO";
 
@@ -110,6 +113,7 @@ public class ProductDAO {
 				vo.setPrice(rs.getInt("PRICE"));
 				vo.setFileName(rs.getString("IMAGE_FILE"));
 				vo.setRegDate(rs.getDate("REG_DATE"));
+				vo.setProTranCode(rs.getString("tran_status_code"));
 				list.add(vo);
 				if (!rs.next())
 					break;

@@ -39,11 +39,11 @@
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
 <script type="text/javascript">
-	<!--
+	
 	function fncGetProductList(){
 		document.detailForm.submit();
 	}
-	-->
+	
 </script>
 
 </head>
@@ -138,7 +138,7 @@
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
 	
-	<% 	int no=list.size();%>
+	<%int no=list.size();%>
 	<%for(int i=0; i<list.size(); i++) {
 			ProductVO vo = (ProductVO)list.get(i);%>
 	
@@ -166,7 +166,7 @@
 				판매중
 			<%} %>
 			<%String userRole = ((UserVO)session.getAttribute("user")).getRole();//session으로부터 받아온 User의 Role %>
-			<%if(proTranCode.equals("sld")){//팔렸음 %>
+			<%if(proTranCode!=null&&proTranCode.equals("sld")){//팔렸음 %>
 				판매완료
 				
 				<%if(userRole.equals("admin")){//로그인중인 사람이 판매자임 %>
@@ -174,11 +174,14 @@
 				<%} %>
 			<%} %>
 			
-			<%if(proTranCode.equals("del")){//배송중임 %>
+			<%if(proTranCode!=null&&proTranCode.equals("del")){//배송중임 %>
 				배송중
 				<%if(userRole.equals("user")){//로그인중인 사람이 고객임 %>
 					<a href="/updateTranCodeByProd.do?prodNo=<%=vo.getProdNo()%>&proTranCode=del"> 도착확인 </a>
 				<%} %>
+			<%} %>
+			<%if(proTranCode!=null&&proTranCode.equals("don")){//도착완료 %>
+				배송완료상태
 			<%} %>
 		
 		</td>	
