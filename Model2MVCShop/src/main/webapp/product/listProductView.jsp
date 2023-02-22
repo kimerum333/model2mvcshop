@@ -170,14 +170,14 @@
 				판매완료
 				
 				<%if(userRole.equals("admin")){//로그인중인 사람이 판매자임 %>
-					<a href="/updateTranCodeByProd.do?prodNo=<%=vo.getProdNo()%>&proTranCode=sld"> 배송하기 </a>
+					<a href="/updateTranCodeByProd.do?prodNo=<%=vo.getProdNo()%>&proTranCode=sld&menu=<%=menu%>"> 배송하기 </a>
 				<%} %>
 			<%} %>
 			
 			<%if(proTranCode!=null&&proTranCode.equals("del")){//배송중임 %>
 				배송중
 				<%if(userRole.equals("user")){//로그인중인 사람이 고객임 %>
-					<a href="/updateTranCodeByProd.do?prodNo=<%=vo.getProdNo()%>&proTranCode=del"> 도착확인 </a>
+					<a href="/updateTranCodeByProd.do?prodNo=<%=vo.getProdNo()%>&proTranCode=del&menu=<%=menu%>"> 도착확인 </a>
 				<%} %>
 			<%} %>
 			<%if(proTranCode!=null&&proTranCode.equals("don")){//도착완료 %>

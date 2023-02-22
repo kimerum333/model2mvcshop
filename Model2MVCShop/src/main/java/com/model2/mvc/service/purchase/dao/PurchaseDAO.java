@@ -3,6 +3,7 @@ package com.model2.mvc.service.purchase.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.model2.mvc.common.util.DBUtil;
 import com.model2.mvc.service.purchase.vo.PurchaseVO;
@@ -88,5 +89,27 @@ public class PurchaseDAO {
 		}		
 		
 		return purchaseVO;
+	}
+
+	public void updateTranCode(PurchaseVO purchaseVO) throws Exception {
+		
+		//커넥션을 겟했다.
+		Connection con = DBUtil.getConnection();
+				
+		//sql 을 준비한다.
+		String sql = "UPDATE transaction"
+				+ " SET tran_status_code = ?"
+				+ " WHERE prod_no = ?";
+
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1,purchaseVO.getTranCode());
+		System.out.println(purchaseVO.getTranCode()+"의 트랜코드로 업데이트합니다.");
+		stmt.setInt(2, purchaseVO.getPurchaseProd().getProdNo());
+		System.out.println(purchaseVO.getPurchaseProd().getProdNo()+"의 프로드노를 업데이트합니다.");
+		
+		
+		stmt.executeUpdate();
+		
+		con.close();
 	}
 }

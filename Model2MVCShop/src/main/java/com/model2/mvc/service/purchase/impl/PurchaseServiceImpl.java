@@ -26,4 +26,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 		return purchaseDAO.getPurchase(tranNo);
 	}
 
+	@Override
+	public void updateTranCode(PurchaseVO purchaseVO) throws Exception {
+		purchaseDAO.updateTranCode(purchaseVO);
+	}
+
 }

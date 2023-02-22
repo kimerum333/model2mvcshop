@@ -10,6 +10,8 @@ public interface PurchaseService {
 	
 	public PurchaseVO getPurchase(int tranNo) throws Exception;
 	
+	public void updateTranCode(PurchaseVO purchaseVO) throws Exception;
+		
 	
 
 }
