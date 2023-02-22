@@ -4,8 +4,7 @@
 <%@ page import="com.model2.mvc.service.user.vo.*" %>
 <%@ page import="com.model2.mvc.common.*" %>
 
-<%
-	HashMap<String,Object> map=(HashMap<String,Object>)request.getAttribute("map");
+<%HashMap<String,Object> map=(HashMap<String,Object>)request.getAttribute("map");
 	SearchVO searchVO=(SearchVO)request.getAttribute("searchVO");
 	
 	int total=0;
@@ -22,8 +21,7 @@
 		totalPage= total / searchVO.getPageUnit() ;
 		if(total%searchVO.getPageUnit() >0)
 			totalPage += 1;
-	}
-%>
+	}%>
 
 <html>
 <head>
@@ -42,7 +40,7 @@ function fncGetUserList(){
 
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="/listProduct.do" method="post">
+<form name="detailForm" action="/listUser.do" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -64,31 +62,21 @@ function fncGetUserList(){
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
-	<%
-		if(searchVO.getSearchCondition() != null) {
-	%>
+	<%if(searchVO.getSearchCondition() != null) {%>
 		<td align="right">
 			<select name="searchCondition" class="ct_input_g" style="width:80px">
-		<%
-				if(searchVO.getSearchCondition().equals("0")){
-		%>
+		<%if(searchVO.getSearchCondition().equals("0")){%>
 				<option value="0" selected>회원ID</option>
 				<option value="1">회원명</option>
-		<%
-				}else {
-		%>
+		<%}else {%>
 				<option value="0">회원ID</option>
 				<option value="1" selected>회원명</option>
-		<%
-				}
-		%>
+		<%}%>
 			</select>
 			<input 	type="text" name="searchKeyword"  value="<%=searchVO.getSearchKeyword() %>" 
 							class="ct_input_g" style="width:200px; height:19px" >
 		</td>
-	<%
-		}else{
-	%>
+	<%}else{%>
 		<td align="right">
 			<select name="searchCondition" class="ct_input_g" style="width:80px">
 				<option value="0">회원ID</option>
@@ -96,9 +84,7 @@ function fncGetUserList(){
 			</select>
 			<input type="text" name="searchKeyword"  class="ct_input_g" style="width:200px; height:19px" >
 		</td>
-	<%
-		}
-	%>
+	<%}%>
 		<td align="right" width="70">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
@@ -119,7 +105,7 @@ function fncGetUserList(){
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
-		<td colspan="11" >전체  <%= total%> 건수, 현재 <%=currentPage %> 페이지</td>
+		<td colspan="11" >전체  <%=total%> 건수, 현재 <%=currentPage %> 페이지</td>
 	</tr>
 	<tr>
 		<td class="ct_list_b" width="100">No</td>
@@ -133,11 +119,9 @@ function fncGetUserList(){
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
-	<% 	
-		int no=list.size();
+	<% 	int no=list.size();
 		for(int i=0; i<list.size(); i++) {
-			UserVO vo = (UserVO)list.get(i);
-	%>
+			UserVO vo = (UserVO)list.get(i);%>
 	<tr class="ct_list_pop">
 		<td align="center"><%=no--%></td>
 		<td></td>
@@ -159,13 +143,9 @@ function fncGetUserList(){
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
 		<td align="center">
-		<%
-			for(int i=1;i<=totalPage;i++){
-		%>
+		<%for(int i=1;i<=totalPage;i++){%>
 			<a href="/listUser.do?page=<%=i%>"><%=i %></a>
-		<%
-			}
-		%>	
+		<%}%>	
     	</td>
 	</tr>
 </table>
