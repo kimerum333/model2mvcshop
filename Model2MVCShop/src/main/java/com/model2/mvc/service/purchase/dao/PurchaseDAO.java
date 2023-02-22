@@ -2,9 +2,11 @@ package com.model2.mvc.service.purchase.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import com.model2.mvc.common.util.DBUtil;
 import com.model2.mvc.service.purchase.vo.PurchaseVO;
+import com.model2.mvc.service.user.vo.UserVO;
 
 public class PurchaseDAO {
 
@@ -54,5 +56,37 @@ public class PurchaseDAO {
 		
 		con.close();
 		//리턴값으로 반영여부를 알려줘야하지않나?
+	}
+	
+	public PurchaseVO getPurchase(int prodNo) throws Exception{
+		
+		//커넥션을 겟했다.
+		Connection con = DBUtil.getConnection();
+		
+		//sql 을 준비한다.
+		
+		String sql = "SELECT * FROM transaction WHERE prod_no = ?";
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setInt(1, prodNo);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		//select one 이므로 선행 초기화해도 문제 없음.
+		PurchaseVO purchaseVO = new PurchaseVO();
+		while(rs.next()) {//binding place
+			purchaseVO.setTranNo(rs.getInt("tran_no"));
+			purchaseVO.getPurchaseProd().setProdNo(rs.getInt("prod_no"));
+			purchaseVO.getBuyer().setUserId(rs.getString("buyer_id"));
+			purchaseVO.setPaymentOption(rs.getString("payment_option"));
+			purchaseVO.setReceiverName(rs.getString("receiver_name"));
+			purchaseVO.setReceiverPhone(rs.getString("receiver_phone"));
+			purchaseVO.setDivyAddr(rs.getString("demailaddr"));
+			purchaseVO.setDivyRequest(rs.getString("dlvy_request"));
+			purchaseVO.setTranCode(rs.getString("tran_status_code"));
+			purchaseVO.setOrderDate(rs.getDate("order_data"));
+			purchaseVO.setDivyDate(rs.getString("dlvy_date"));
+		}		
+		
+		return purchaseVO;
 	}
 }

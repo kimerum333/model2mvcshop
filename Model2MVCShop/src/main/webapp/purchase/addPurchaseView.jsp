@@ -2,10 +2,10 @@
     pageEncoding="EUC-KR"%>
 <%@page import="com.model2.mvc.service.product.vo.*" %>
 <%@ page import="com.model2.mvc.service.user.vo.*" %>
+
 <%ProductVO prodVO = (ProductVO)request.getAttribute("prodVO"); %>
-<%
-	UserVO userVO = (UserVO)session.getAttribute("user");
-%>	
+<%UserVO userVO = (UserVO)session.getAttribute("user");%>	
+
 <!DOCTYPE html>
 <html>
 <head>

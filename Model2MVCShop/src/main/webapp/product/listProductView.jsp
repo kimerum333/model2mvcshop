@@ -1,10 +1,11 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.model2.mvc.common.SearchVO"%>
+<%@page import="com.model2.mvc.service.user.vo.*" %>
 <%@page import="com.model2.mvc.service.product.vo.*" %>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-    
+<% // product list get 할 때 proTranCode 어떻게든 얻어서 listProdctView로 보내줘야함.%>
 <%
 	HashMap<String,Object> map=(HashMap<String,Object>)request.getAttribute("map");
 	SearchVO searchVO=(SearchVO)request.getAttribute("searchVO");
@@ -137,20 +138,18 @@
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
 	
-	<% 	
-		int no=list.size();
-		for(int i=0; i<list.size(); i++) {
-			ProductVO vo = (ProductVO)list.get(i);
-	%>
+	<% 	int no=list.size();%>
+	<%for(int i=0; i<list.size(); i++) {
+			ProductVO vo = (ProductVO)list.get(i);%>
 	
 	<tr class="ct_list_pop">
 		<td align="center"><%=no--%></td>
 		<td></td>
-				<%
-				HashMap<String,String> nextLocation = new HashMap<String,String>();
+				
+			  <%//어떤 매뉴로 들어왔느냐에 따라 상품구입 / 상품정보수정을 갈라서 보내준다.
+			    HashMap<String,String> nextLocation = new HashMap<String,String>();
 				nextLocation.put("search", "/getProduct.do?prodNo="+vo.getProdNo()+"&menu=search");
-				nextLocation.put("manage", "/updateProductView.do?prodNo="+vo.getProdNo()+"&menu=manage");
-				%>
+				nextLocation.put("manage", "/updateProductView.do?prodNo="+vo.getProdNo()+"&menu=manage");%>
 				<td align="left"><a href="<%=nextLocation.get(menu)%>"> <%=vo.getProdName() %> </a></td>
 		
 		<td></td>
@@ -161,15 +160,33 @@
 		<td align="left"><%=goodDate %></td>
 		<td></td>
 		<td align="left">
-		
-			나중에만들꺼임
+			<%//이곳에 판매 상태에 따른 proTranCode update 버튼을 놓겠다. %>
+			<%String proTranCode = vo.getProTranCode(); %>
+			<%if(proTranCode==null){//판매중임 %>
+				판매중
+			<%} %>
+			<%String userRole = ((UserVO)session.getAttribute("user")).getRole();//session으로부터 받아온 User의 Role %>
+			<%if(proTranCode.equals("sld")){//팔렸음 %>
+				판매완료
+				
+				<%if(userRole.equals("admin")){//로그인중인 사람이 판매자임 %>
+					<a href="/updateTranCodeByProd.do?prodNo=<%=vo.getProdNo()%>&proTranCode=sld"> 배송하기 </a>
+				<%} %>
+			<%} %>
+			
+			<%if(proTranCode.equals("del")){//배송중임 %>
+				배송중
+				<%if(userRole.equals("user")){//로그인중인 사람이 고객임 %>
+					<a href="/updateTranCodeByProd.do?prodNo=<%=vo.getProdNo()%>&proTranCode=del"> 도착확인 </a>
+				<%} %>
+			<%} %>
 		
 		</td>	
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
 	</tr>	
-	<% } %>
+	<% }//end of for %>
 	
 	
 	<tr>
@@ -181,13 +198,9 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
 		<td align="center">
-		<%
-			for(int i=1;i<=totalPage;i++){
-		%>
+		<%for(int i=1;i<=totalPage;i++){%>
 			<a href="/listProduct.do?page=<%=i%>&menu=<%=menu%>"> <%=i %> </a>
-		<%
-			}
-		%>
+		<%}%>
 			
 		
     	</td>

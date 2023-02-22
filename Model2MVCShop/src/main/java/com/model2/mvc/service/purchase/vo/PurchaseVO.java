@@ -21,6 +21,9 @@ public class PurchaseVO {
 	private int tranNo;
 	
 	public PurchaseVO(){
+		this.setBuyer(new UserVO());
+		this.setPurchaseProd(new ProductVO());
+		//积己瞪 锭 后 VO 牢璃记
 	}
 	
 	public UserVO getBuyer() {
