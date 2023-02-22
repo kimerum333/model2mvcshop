@@ -1,49 +1,25 @@
 package com.model2.mvc.service.purchase.impl;
 
-import java.util.Map;
-
-import com.model2.mvc.common.Search;
-import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.purchase.PurchaseService;
-
-
+import com.model2.mvc.service.purchase.vo.PurchaseVO;
+import com.model2.mvc.service.user.dao.UserDAO;
 
 public class PurchaseServiceImpl implements PurchaseService {
-	private PurchaseDAO purchaseDAO;
-	
-	///Field
-	public PurchaseServiceImpl() {
-		if(this.purchaseDAO==null) {
-			purchaseDAO=new PurchaseDAO(); 
-		}
-	}
-	 
+	/*
+	 * private PurchaseDAO purchaseDAO;
+	 * 
+	 * public PurchaseServiceImpl() { purchaseDAO=new PurchaseDAO(); }
+	 */
 	@Override
-	public Purchase addPurchase(Purchase purchase) throws Exception {
-		purchaseDAO.insertPurchase(purchase);
-		return purchase;
+	public PurchaseVO addPurchase(PurchaseVO purchaseVO) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public Purchase getPurchase(int tranNo) throws Exception {
-		return purchaseDAO.findPurchase(tranNo);
+	public PurchaseVO getPurchase(int tranNo) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
-
-	@Override
-	public Map getPurchaseList(Search search, String loginUserId) throws Exception {
-		return purchaseDAO.getPurchaseList(search, loginUserId);
-	}
-
-	@Override
-	public Purchase updatePurchase(Purchase purchase) throws Exception {
-		return purchaseDAO.updatePurchase(purchase);
-	}
-
-	@Override
-	public void updateTranCode(Purchase purchase) throws Exception {
-		purchaseDAO.updateTranCode(purchase);		
-	}
-	
-	
 
 }

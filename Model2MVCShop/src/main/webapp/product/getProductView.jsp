@@ -1,7 +1,10 @@
-
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="com.model2.mvc.service.product.vo.*" %>
+<%ProductVO vo = (ProductVO)request.getAttribute("vo"); %>
+<%String menu = (String)request.getAttribute("menu"); %>
+<%System.out.println("getProductView 가 받은 현재상태 ProductVO = "+vo+"menu = "+menu); %>
 
 <!DOCTYPE html>
 <html>
@@ -43,7 +46,7 @@
 		<td class="ct_write01">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="105">${product.prodNo}</td>
+					<td width="105"><%=vo.getProdNo() %></td>
 				</tr>
 			</table>
 		</td>
@@ -56,7 +59,7 @@
 			상품명 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${product.prodName}</td>
+		<td class="ct_write01"><%=vo.getProdName() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -78,7 +81,7 @@
 			상품상세정보 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${product.prodDetail}</td>
+		<td class="ct_write01"><%=vo.getProdDetail() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -86,7 +89,7 @@
 	<tr>
 		<td width="104" class="ct_write">제조일자</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${product.manuDate}</td>
+		<td class="ct_write01"><%=vo.getManuDate() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -94,7 +97,7 @@
 	<tr>
 		<td width="104" class="ct_write">가격</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${product.price}</td>
+		<td class="ct_write01"><%=vo.getPrice() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -102,7 +105,7 @@
 	<tr>
 		<td width="104" class="ct_write">등록일자</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${product.regDate}</td>
+		<td class="ct_write01"><%=vo.getRegDate() %></td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -111,7 +114,9 @@
 
 
 
-	<c:if test="${param.menu eq 'manage'||empty param.menu}">
+<%String[] buttons = {"manage","search"}; %>
+	<%if(menu.equals(buttons[0])){ %>
+
 		<table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top: 10px;">
 			<tr>
 				<td width="53%"></td>
@@ -133,11 +138,11 @@
 				</td>
 			</tr>
 		</table>
-	</c:if>
+	<%}//end of button 0 %>
 	
 	
 	
-	<c:if test="${param.menu eq 'search'}">
+	<%if(menu.equals(buttons[1])){ %>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top: 10px;">
 		<tr>
 			<td width="53%"></td>
@@ -150,7 +155,7 @@
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-						<a href="/addPurchaseView.do?prod_no=${product.prodNo}">구매</a>
+						<a href="/addPurchaseView.do?prod_no=<%=vo.getProdNo()%>">구매</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23">
@@ -168,7 +173,7 @@
 					</td>
 				</tr>
 			</table>
-	</c:if>
+	<%}//end of  button 1%>
 
 
 

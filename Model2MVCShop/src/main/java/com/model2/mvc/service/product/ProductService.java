@@ -1,20 +1,19 @@
 package com.model2.mvc.service.product;
 
-import java.util.Map;
+import java.util.HashMap;
 
-import com.model2.mvc.common.Search;
-import com.model2.mvc.service.domain.Product;
+import com.model2.mvc.common.SearchVO;
+import com.model2.mvc.service.product.vo.ProductVO;
 
 
 public interface ProductService {
 	
-	public Product addProduct(Product product) throws Exception;
+	public ProductVO addProduct(ProductVO productVO) throws Exception;
 	
-	public Product getProduct(int prodNo) throws Exception;
-	  
-	public Map<String, Object> getProductList(Search search) throws Exception;
-	  
-	public Product updateProduct(Product product) throws Exception;
-	 
+	public ProductVO getProduct(int prodNo) throws Exception;
+	
+	public HashMap<String, Object> getProductList(SearchVO searchVO) throws Exception;
+	
+	public ProductVO updateProduct(ProductVO productVO) throws Exception;
 	
 }

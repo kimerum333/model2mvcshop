@@ -1,7 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%System.out.println("리퀘스트에 심긴 정보를 확인하겠습니다."+request.getParameter("prodName"));
-%>
+<%@ page import="com.model2.mvc.service.product.vo.*" %>
+<%
+	//String menu = "";
+	ProductVO vo = null;
+	
+	if(session.getAttribute("vo")!=null){
+		vo = (ProductVO)session.getAttribute("vo");
+	}else if(request.getAttribute("vo")!=null){
+		vo = (ProductVO)request.getAttribute("vo");
+	}
+
+	
+%>	
 
 <!DOCTYPE html>
 <html>
@@ -41,7 +52,7 @@
 			<td class="ct_write01">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td width="105">${param.prodName}</td>
+						<td width="105"><%=vo.getProdName()%></td>
 						<td></td>
 					</tr>
 				</table>
@@ -56,7 +67,7 @@
 				상품상세정보 <img  src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 			</td>
 			<td bgcolor="D6D6D6" width="1"></td>
-			<td class="ct_write01">${param.prodDetail}</td>
+			<td class="ct_write01"><%=vo.getProdDetail() %></td>
 		</tr>
 		<tr>
 			<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -67,7 +78,7 @@
 				제조일자<img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 			</td>
 			<td bgcolor="D6D6D6" width="1"></td>
-			<td class="ct_write01">${param.manuDate}</td>
+			<td class="ct_write01"><%=vo.getManuDate() %></td>
 		</tr>
 		<tr>
 			<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -77,7 +88,7 @@
 				가격<img 	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 			</td>
 			<td bgcolor="D6D6D6" width="1"></td>
-			<td class="ct_write01">${param.price}</td>
+			<td class="ct_write01"><%=vo.getPrice()	 %></td>
 		</tr>
 	
 		<tr>
@@ -86,12 +97,12 @@
 		<tr>
 			<td width="104" class="ct_write">상품이미지</td>
 			<td bgcolor="D6D6D6" width="1"></td>
-			<td class="ct_write01">${param.fileName}
+			<td class="ct_write01"><%=vo.getFileName() %>
 				<!-- 테이블 시작 -->
 				<table border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<td height="26">
-							나중에 파일 이미지가 올라올 곳입니다.
+							<img src="/images/uploadFiles/../../images/empty.GIF"/>
 						</td>
 					</tr>
 				</table>

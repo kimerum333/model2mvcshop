@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.model2.mvc.service.purchase.vo.*" %>
+<% PurchaseVO vo = (PurchaseVO)session.getAttribute("vo"); %>
     
 <!DOCTYPE html>
 <html>

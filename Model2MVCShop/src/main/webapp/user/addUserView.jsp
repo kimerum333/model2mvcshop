@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
 <script type="text/javascript">
-
+<!--
 function fncAddUser() {
 	// Form 유효성 검증
 	var id=document.detailForm.userId.value;
@@ -89,14 +89,13 @@ function PortalJuminCheck(fieldValue){
 }
 
 function fncCheckDuplication() {
-	popWin 
-		= window.open("/user/checkDuplication.jsp","popWin", "left=300,top=200,width=300,height=200,marginwidth=0,marginheight=0,scrollbars=no,scrolling=no,menubar=no,resizable=no");
+	popWin = window.open("/user/checkDuplication.jsp","popWin", "left=300,top=200,width=300,height=200,marginwidth=0,marginheight=0,scrollbars=no,scrolling=no,menubar=no,resizable=no");
 }
 
 function resetData() {
 	document.detailForm.reset();
 }
-
+-->
 </script>
 </head>
 
@@ -124,7 +123,6 @@ function resetData() {
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:13px;">
-	
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
@@ -138,8 +136,7 @@ function resetData() {
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="105">
-						<input 	type="text" name="userId" class="ct_input_bg" 
-										style="width:100px; height:19px"  maxLength="20" >
+						<input type="text" name="userId" class="ct_input_bg" style="width:100px; height:19px"  maxLength="20" >
 					</td>
 					<td>
 						<table border="0" cellspacing="0" cellpadding="0">
@@ -147,11 +144,12 @@ function resetData() {
 								<td width="4" height="21">
 									<img src="/images/ct_btng01.gif" width="4" height="21"/>
 								</td>
-								<td align="center" background="/images/ct_btng02.gif" class="ct_btn" style="padding-top:3px;">
+								<td 	align="center" background="/images/ct_btng02.gif" class="ct_btn" 
+										style="padding-top:3px;">
 									<a href="javascript:fncCheckDuplication();" id="btnCmfID">ID중복확인</a>
 								</td>
 								<td width="4" height="21">
-									<img src="/images/ct_btng03.gif" width="4" height="21"/>
+									<img src="/images/ct_btng03.gif" width="4" height="21">
 								</td>
 							</tr>
 						</table>
@@ -197,12 +195,12 @@ function resetData() {
 	
 	<tr>
 		<td width="104" class="ct_write">
-			이름 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+			이름<img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<input 	type="text" name="userName" class="ct_input_g" 
-							style="width:100px; height:19px"  maxLength="50" />
+							style="width:100px; height:19px"  maxLength="50" >
 		</td>
 	</tr>
 	
@@ -214,8 +212,8 @@ function resetData() {
 		<td width="104" class="ct_write">주민번호</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input 	type="text" name="ssn" class="ct_input_g" style="width:100px; height:19px" 
-							onChange="javascript:checkSsn();"  maxLength="13" />
+			<input 	type="text" name="ssn" class="ct_input_g" 
+							style="width:100px; height:19px" onChange="javascript:checkSsn();"  maxLength="13" >
 			-제외, 13자리 입력
 		</td>
 	</tr>
@@ -229,7 +227,7 @@ function resetData() {
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<input		type="text" name="addr" class="ct_input_g" 
-						 	style="width:370px; height:19px"  maxLength="100"/>
+							style="width:370px; height:19px"  maxLength="100"/>
 		</td>
 	</tr>
 	
@@ -241,7 +239,7 @@ function resetData() {
 		<td width="104" class="ct_write">휴대전화번호</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<select 	name="phone1" class="ct_input_g" style="width:50px; height:25px"
+			<select 	name="phone1" class="ct_input_g" style="width:50px" 
 							onChange="document.detailForm.phone2.focus();">
 				<option value="010" >010</option>
 				<option value="011" >011</option>
@@ -249,12 +247,12 @@ function resetData() {
 				<option value="018" >018</option>
 				<option value="019" >019</option>
 			</select>
-			<input 	type="text" name="phone2" class="ct_input_g" 
-							style="width:100px; height:19px"  maxLength="9" />
+			<input type="text" name="phone2" class="ct_input_g" 
+						style="width:100px; height:19px"  maxLength="9" />
 			- 
-			<input 	type="text" name="phone3" class="ct_input_g" 
-							style="width:100px; height:19px"  maxLength="9" />
-			<input type="hidden" name="phone" class="ct_input_g"  />
+			<input type="text" name="phone3" class="ct_input_g" 
+						style="width:100px; height:19px"  maxLength="9" />
+			<input type="hidden" name="phone" class="ct_input_g"  >
 		</td>
 	</tr>
 
@@ -270,23 +268,20 @@ function resetData() {
 				<tr>
 					<td height="26">
 						<input 	type="text" name="email" class="ct_input_g" 
-										style="width:100px; height:19px" onChange="check_email(this.form);" />
+										style="width:100px; height:19px" onChange="check_email(this.form);">
 					</td>
 				</tr>
 			</table>
 		</td>
 	</tr>
-
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
-	
 </table>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top:10px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
 	<tr>
-		<td width="53%">	</td>
-
+		<td width="53%"></td>
 		<td align="right">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
@@ -307,7 +302,7 @@ function resetData() {
 						<a href="javascript:resetData();">취소</a>
 					</td>
 					<td width="14" height="23">
-						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
+						<img src="/images/ct_btnbg03.gif" width="14" height="23">
 					</td>
 				</tr>
 			</table>
@@ -316,6 +311,10 @@ function resetData() {
 </table>
 
 </form>
+
+<script type="text/javascript">
+document.getElementById("btnCmfID").focus();
+</script>
 
 </body>
 </html>
