@@ -21,7 +21,7 @@
 
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="/listProduct.do" method="post">
+<form name="detailForm" action="/product/listProduct" method="post">
 <input type="hidden" name="menu" value="${param.menu}" />
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
@@ -104,12 +104,12 @@
 		<tr class="ct_list_pop">
 			<td align="center">${i}</td>
 			<td></td>
-			<c:set var="nextLocation" value="/getProduct.do"/>
+			<c:set var="nextLocation" value="/product/getProduct"/>
 			<c:if test="${param.menu eq 'search'}">
-				<c:set var="nextLocation" value="/getProduct.do"/>
+				<c:set var="nextLocation" value="/product/getProduct"/>
 			</c:if>
 			<c:if test="${param.menu eq 'manage'}">
-				<c:set var="nextLocation" value="/updateProductView.do"/>
+				<c:set var="nextLocation" value="/product/updateProduct"/>
 			</c:if>
 			
 			<td align="left"><a href="${nextLocation}?prodNo=${product.prodNo}&menu=${param.menu}"> ${product.prodName}${product.prodNo} </a></td>
@@ -123,10 +123,10 @@
 			
 			<c:if test="${empty product.proTranCode}"> 판매중 </c:if>
 			<c:if test="${product.proTranCode eq 'sld'}"> 판매완료 
-				<c:if test="${menu eq 'manage'}"> <a href="/updateProTranCode.do?proTranCode=sld">배송시작</a></c:if>		
+				<c:if test="${menu eq 'manage'}"> <a href="/purchase/updateProTranCode?proTranCode=sld">배송시작</a></c:if>		
 			</c:if>
 			<c:if test="${product.proTranCode eq 'del'}"> 배송중
-				<c:if test="${menu eq 'search'}"> <a href="/updateProTranCode.do?proTranCode=del">상품받기</a></c:if>	
+				<c:if test="${menu eq 'search'}"> <a href="/purchase/updateProTranCode?proTranCode=del">상품받기</a></c:if>	
 			</c:if>
 			<c:if test="${product.proTranCode eq 'don'}"> 배송완료	
 			</c:if>

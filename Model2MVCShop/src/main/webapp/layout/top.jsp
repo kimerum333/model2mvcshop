@@ -39,7 +39,7 @@ User vo=(User)session.getAttribute("user");
 	          <%
 	          	if(vo != null) {
 	          %>
-	            <a href="/logout.do" target="_parent">logout</a>  
+	            <a href="/user/logout" target="_parent">logout</a>  
 	           <%
 	          	}
 	           %>

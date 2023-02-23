@@ -4,9 +4,11 @@
 	<body>
 	
 		<h3> NullPointerException page</h3>
-		<%	Exception exception = (Exception)request.getAttribute("exception");	%>
-		<%="Java Code을 이용한 예외 Message 보기 ::" +  exception.getMessage() %><br/>
-		EL을 이용한 예외 Message 보기 :: ${ exception.message }<br/> 
+		<%-- <%	Exception exception = (Exception)request.getAttribute("exception");	%>
+		<%="Java Code을 이용한 예외 Message 보기 ::" +  exception.getMessage() %><br/> --%>
+		EL을 이용한 예외 Message 보기 ::
+		<br/>
+		 ${ exception.message }<br/> 
 		
 		<hr/>
 		<br/>

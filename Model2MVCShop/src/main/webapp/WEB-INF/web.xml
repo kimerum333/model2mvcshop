@@ -39,7 +39,8 @@
 		<param-value>3</param-value>
 	</context-param> -->
 
-	<!--한번 리퀘스트 필터라는 필터명을 유지해본다. 클래스는 바뀌었지만. 제대로 작동하는지 보겠다.  -->
+	<!--한번 리퀘스트 필터라는 필터명을 유지해본다. 클래스는 바뀌었지만. 제대로 작동하는지 보겠다.
+		별 이상이 없었다.  -->
 	<!--Filter의 parameter를 주지 않았을 경우 한글이 제대로 되지 않는다.  -->
 	<filter>
 		<filter-name>requestFilter</filter-name>
@@ -76,12 +77,23 @@
 		
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+		
+	<!-- 우리는 .do 매핑을 버리기로 했다.
+	확장자가 ~.do일 경우에 매핑하겠다. 매핑할 서블릿 이름은 action
+		<servlet-mapping>
+			<servlet-name>action</servlet-name>
+			<url-pattern>*.do</url-pattern>
+		</servlet-mapping> -->
+		
+	<!-- 모조리 디스패처서블릿으로 보내겠다.
+	단, 이미지파일의 로딩 리퀘스트따위까지 가버리면 안되므로
+	src/main/webapp/config/springMVC/common-servlet.xml 에서 따로 설정한다.  -->
 	
-	<!-- 확장자가 ~.do일 경우에 매핑하겠다. 매핑할 서블릿 이름은 action -->	
 	<servlet-mapping>
-		<servlet-name>action</servlet-name>
-		<url-pattern>*.do</url-pattern>
+	  <servlet-name>action</servlet-name>
+	  <url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
 		
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file> 
