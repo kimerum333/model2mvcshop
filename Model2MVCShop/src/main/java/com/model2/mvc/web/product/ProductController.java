@@ -66,7 +66,7 @@ public class ProductController {
 		Product addedProduct = productService.addProduct(product);
 		int prodNo = addedProduct.getProdNo();
 		System.out.println("등록한 상품의 " + prodNo);
-
+		
 		// get으로 태워보내서 등록한상품을 보여주겠다.
 		return "redirect:/product/getProduct?prodNo=" + prodNo;
 	}

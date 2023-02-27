@@ -1,5 +1,6 @@
 package com.model2.mvc.web.user;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,17 +36,33 @@ public class UserRestController {
 	//setter Method 구현 않음
 		
 	public UserRestController(){
-		System.out.println(this.getClass());
+		System.out.println(this.getClass()+" instance on");
 	}
 	
+	/*
+	 * @RequestMapping( value="json/getUser/{userId}", method=RequestMethod.GET )
+	 * public User getUser( @PathVariable String userId ) throws Exception{
+	 * 
+	 * System.out.println("/user/json/getUser : GET");
+	 * 
+	 * //Business Logic return userService.getUser(userId); }
+	 */
+	
 	@RequestMapping( value="json/getUser/{userId}", method=RequestMethod.GET )
-	public User getUser( @PathVariable String userId ) throws Exception{
+	public Map getUser( @PathVariable String userId ) throws Exception{
 		
 		System.out.println("/user/json/getUser : GET");
 		
 		//Business Logic
-		return userService.getUser(userId);
+		
+		User dbUser = userService.getUser(userId);
+		System.out.println("dbUser is" + dbUser);
+		Map map = new HashMap();
+		map.put("user",dbUser);
+		
+		return map;
 	}
+	
 
 	@RequestMapping( value="json/login", method=RequestMethod.POST )
 	public User login(		@RequestBody User user,
