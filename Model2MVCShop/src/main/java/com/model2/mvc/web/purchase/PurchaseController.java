@@ -21,7 +21,8 @@
 //import com.model2.mvc.service.product.ProductService;
 //import com.model2.mvc.service.purchase.PurchaseService;
 //
-////@Controller
+//@Controller
+//@RequestMapping("/purchase/*")
 //public class PurchaseController {
 //
 //	/// Field
@@ -53,34 +54,33 @@
 //	}
 //
 //	/// Method
-//	@RequestMapping("/addPurchase.do")
-//	public String addPurchase(@ModelAttribute("purchaseToAdd") Purchase purchase) throws Exception {
-//		// arg 단계에서 form 을 binding하고 request scope 에 productToAdd라는 이름으로 넣었다.
-//		System.out.println("/addPurchase.do");
+//	@RequestMapping("addPurchase")
+//	public String addPurchase(@ModelAttribute("purchase") Purchase purchase) throws Exception {
+//		// arg 단계에서 form 을 binding하고 request scope 에 purchase라는 이름으로 넣었다.
+//		System.out.println("/addPurchase");		
 //
 //		// business logic
 //		Purchase addedPurchase = purchaseService.addPurchase(purchase);
-//		int prodNo = addedProduct.getProdNo();
-//		System.out.println("등록한 상품의 " + prodNo);
+//		int tranNo = addedPurchase.getTranNo();
+//		System.out.println("등록한 거래의 거래번호 " + tranNo);
 //
 //		// get으로 태워보내서 등록한상품을 보여주겠다.
-//		return "redirect:/getProduct.do?prodNo=" + prodNo;
+//		return "redirect:/purchase/getPurchase?prodNo=" + tranNo;
 //	}
 //
-//	@RequestMapping("/getProduct.do")
-//	public String getProduct(@RequestParam("prodNo") int prodNo, Model model) throws Exception {
-//		System.out.println("/getProduct.do");
+//	@RequestMapping("getPurchase")
+//	public String getPurchase(@RequestParam("tranNo") int tranNo, Model model) throws Exception {
+//		System.out.println("/getPurchase");
 //
 //		
-//		Product DbProduct = productService.getProduct(prodNo);
-//		model.addAttribute("product", DbProduct);
-//		return "forward:/product/getProductView.jsp";
+//		Purchase DBPurchase = purchaseService.getPurchase(tranNo);
+//		model.addAttribute("purchase", DBPurchase);
+//		return "forward:/purchase/getProductView.jsp";
 //	}
 //
-//	@RequestMapping("/listProduct.do")
-//	public String listProduct(@ModelAttribute("search") Search search, Model model) throws Exception {
-//		System.out.println("/listProduct.do");
-//		//TODO listproduct가 고장나잇음...상품 업데이트가 아낻ㅁ
+//	@RequestMapping("listPurchase")
+//	public String listPurchase(@ModelAttribute("search") Search search, Model model) throws Exception {
+//		System.out.println("listPurchase");
 //		// AutoBinding된 search로부터 page를 추출해보고, 만약 set되지 않았다면 1로 한다.
 //		if (search.getCurrentPage() == 0) {
 //			search.setCurrentPage(1);
