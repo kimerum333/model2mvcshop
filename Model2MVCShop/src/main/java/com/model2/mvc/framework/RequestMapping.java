@@ -40,7 +40,7 @@ public class RequestMapping {
 	public Action getAction(String path){
 		//action = map으로부터 갖고온 action을 취해야 할 장소의 경로.
 		Action action = map.get(path);
-		System.out.println(action+"여기는 매핑 중 액션이다.");
+		System.out.println(action);
 		if(action == null){ //map이 고장났거나 같은 이유로 action을 못 받으면, property로부터 직접 경로를 추출해 action을 만든다.
 			String className = properties.getProperty(path);
 			System.out.println("prop : " + properties);

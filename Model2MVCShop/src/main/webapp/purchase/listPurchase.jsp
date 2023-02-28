@@ -27,6 +27,11 @@
 			totalPage += 1;
 	}
 	System.out.println("At list view, settings : "+searchVO);
+	//변수
+	//list = 구매정보가 담긴 리스트
+	//totalCount = 총 검색 건수가 담긴 인트
+	//currentPage = 현재 페이지수가 담긴 정보. 기본값은 1이고 다른 페이지를 클릭해서 추가 정보를 열람하기 위해 사용.
+	//totalPage = 총 페이지수.
 %>
 <!DOCTYPE html>
 <html>
@@ -128,10 +133,11 @@
 	<tr>
 		<td align="center">
 		 
-			<a href="/listPurchase.do?page=1"></a> 
+		 	<%for(int i=0;i<totalPage;i++){ %>
 		 
-			<a href="/listPurchase.do?page=2">2</a> 
-		
+			<a href="/listPurchase.do?page=<%=i+1%>"><%=i+1%></a> 
+		 
+			<%} %>		
 		</td>
 	</tr>
 </table>
