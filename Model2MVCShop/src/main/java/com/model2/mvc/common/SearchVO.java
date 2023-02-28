@@ -8,10 +8,10 @@ public class SearchVO {
 		return "SearchVO [page=" + page + ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword
 				+ ", pageUnit=" + pageUnit + "]";
 	}
-	private int page;
+	private int page=1;
 	String searchCondition;
 	String searchKeyword;
-	int pageUnit;
+	int pageUnit=3;
 	
 	public SearchVO(){
 	}

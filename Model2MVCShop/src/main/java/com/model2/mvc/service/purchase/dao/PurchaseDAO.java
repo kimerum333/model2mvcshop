@@ -121,6 +121,7 @@ public class PurchaseDAO {
 		// TODO Auto-generated method stub
 		//필요한 정보를 꺼낸다.
 		String userId = searchVO.getSearchKeyword();
+		System.out.println("로그인중인 유저 : "+userId);
 		
 		//커넥션을 겟했다.
 		Connection con = DBUtil.getConnection();
@@ -129,7 +130,9 @@ public class PurchaseDAO {
 				
 		String sql = "SELECT * FROM transaction where buyer_id = ?";
 			   sql += " order by tran_no";
-		PreparedStatement stmt = con.prepareStatement(sql);
+		PreparedStatement stmt = con.prepareStatement(	sql,
+				ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_UPDATABLE);;
 		stmt.setString(1,userId);
 		
 		ResultSet rs = stmt.executeQuery();

@@ -30,7 +30,6 @@ public class ListPurchaseAction extends Action {
 		//검색조건인 Search를 확보합니다.
 		
 		SearchVO searchVO = new SearchVO();
-		searchVO.setSearchKeyword(userId); //언제나 로그인중인 유저의 아이디로 검색할 겁니다.
 		
 		//페이지를 확보하는 로직
 		//디폴트 페이지는 1
@@ -49,6 +48,7 @@ public class ListPurchaseAction extends Action {
 			
 		//비즈니스로직을 수행할 서비스를 만듭니다.
 		PurchaseService purchaseService = new PurchaseServiceImpl();
+		searchVO.setSearchKeyword(userId); //언제나 로그인중인 유저의 아이디로 검색할 겁니다.
 		HashMap<String, Object> map = purchaseService.getPurchaseList(searchVO);
 		//수행 결과로 받은 검색결과가 들어있는 맵을 화면단으로 넘겨줍니다.
 		request.setAttribute("map", map);

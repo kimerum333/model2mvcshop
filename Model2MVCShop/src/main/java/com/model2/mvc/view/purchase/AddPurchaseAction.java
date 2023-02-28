@@ -72,7 +72,7 @@ public class AddPurchaseAction extends Action {
 		vo.setPurchaseProd(productVO);
 		vo.setReceiverName(receiverName);
 		vo.setReceiverPhone(receiverPhone);
-		vo.setTranCode("1");
+		vo.setTranCode("sld");
 		//tranNo ½ÃÄö½º
 		
 		//execute

@@ -8,7 +8,7 @@ import com.model2.mvc.service.purchase.PurchaseService;
 import com.model2.mvc.service.purchase.impl.PurchaseServiceImpl;
 import com.model2.mvc.service.purchase.vo.PurchaseVO;
 
-public class updateTranCode extends Action {
+public class UpdateTranCodeAction extends Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -21,15 +21,7 @@ public class updateTranCode extends Action {
 		int prodNo = Integer.parseInt(request.getParameter("prodNo"));
 		PurchaseVO updatingPurchase = purchaseService.getPurchase(prodNo);
 		//업데이트할 문구 확보 
-		String nowIsTranCode = request.getParameter("proTranCode");		
-		String toBeTranCode = "";
-		if(nowIsTranCode.equals("sld")) {
-			toBeTranCode = "del";
-		}else if(nowIsTranCode.equals("del")) {
-			toBeTranCode = "don";
-		}
-		//list 를 유지하기 위한 menu확보
-		String menu = request.getParameter("menu");
+		String toBeTranCode = "don";	
 				
 		//business logic
 		updatingPurchase.setTranCode(toBeTranCode);
