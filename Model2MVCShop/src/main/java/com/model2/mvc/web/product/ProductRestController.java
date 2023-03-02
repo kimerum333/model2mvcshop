@@ -56,9 +56,10 @@ public class ProductRestController {
 		// get으로 태워보내서 등록한상품을 보여주겠다.
 		return productToGet;
 	}
-	@RequestMapping(value="json/getProduct}",method=RequestMethod.POST)
-	public Map getProductByPost(@RequestParam("prodNo") int prodNo) throws Exception{
+	@RequestMapping(value="json/getProduct",method=RequestMethod.POST)
+	public Map getProductByPost(@RequestBody Product product) throws Exception{
 		System.out.println("/pruduct/json/getProduct : POST / to JSON Map");
+		int prodNo = product.getProdNo();
 		System.out.println("prodNo is "+prodNo);
 		//business logic
 		Product productToGet = productService.getProduct(prodNo);
@@ -74,6 +75,7 @@ public class ProductRestController {
 
 		// business logic
 		Product addedProduct = productService.addProduct(product);
+		System.out.println(addedProduct);
 		return addedProduct;
 	}
 

@@ -55,9 +55,10 @@
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getProduct"	parameterType="int"	resultMap="productSelectMap">
 		SELECT
-		prod_no , prod_name , prod_detail , manufacture_day ,  price ,  image_file , image_file , reg_date 		
+		prod_no , prod_name , prod_detail , manufacture_day ,  price ,  image_file , reg_date 		
 		FROM product 
 		WHERE prod_no = #{value}
+		ORDER BY prod_no
 	 </select>
 	 
 	 <!-- SQL : UPDATE

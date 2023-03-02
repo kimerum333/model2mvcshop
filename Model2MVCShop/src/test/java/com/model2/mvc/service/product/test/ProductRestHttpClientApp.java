@@ -15,6 +15,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.User;
 
 
@@ -30,23 +31,12 @@ public class ProductRestHttpClientApp {
 		
 		System.out.println("\n====================================\n");
 		// 1.1 Http Get 방식 Request : JsonSimple lib 사용
-//		ProductRestHttpClientApp.getProductTest_JsonSimple();
+		//ProductRestHttpClientApp.getProductTest_JsonSimple();
 		
-//		System.out.println("\n====================================\n");
-//		// 1.2 Http Get 방식 Request : CodeHaus lib 사용
-//		RestHttpClientApp.getUserTest_Codehaus();
-		
-//		System.out.println("\n====================================\n");
-//		// 2.1 Http Post 방식 Request : JsonSimple lib 사용
-//		RestHttpClientApp.LoginTest_JsonSimple();
-		
-//		System.out.println("\n====================================\n");
-//		// 1.2 Http Post 방식 Request : CodeHaus lib 사용
-//		RestHttpClientApp.LoginTest_Codehaus();		
-	
 		System.out.println("\n====================================\n");
 		// 1.2 Http Post 방식 Request : CodeHaus lib 사용
 		ProductRestHttpClientApp.getProduct_Codehaus_Map_POST();
+		
 		
 		
 	}
@@ -102,10 +92,13 @@ public static void getProduct_Codehaus_Map_POST() throws Exception{
 		httpPost.setHeader("Content-Type", "application/json");
 		
 		//JSON Object 사용
-		JSONObject json = new JSONObject();
-		json.put("prodNo", 10003);
-		System.out.println("json is"+json);
-		HttpEntity httpEntity01 = new StringEntity(json.toString(),"utf-8");
+		Product productToGet = new Product();
+		productToGet.setProdNo(10003);
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonString = objectMapper.writeValueAsString(productToGet);
+		
+		System.out.println("json is"+jsonString);
+		HttpEntity httpEntity01 = new StringEntity(jsonString,"UTF-8");
 		
 		httpPost.setEntity(httpEntity01);
 		HttpResponse httpResponse = httpClient.execute(httpPost);
