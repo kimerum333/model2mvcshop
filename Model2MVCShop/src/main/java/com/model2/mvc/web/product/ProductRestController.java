@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,6 +66,15 @@ public class ProductRestController {
 		Map map = new HashMap();
 		map.put("product", productToGet);
 		return map;
+	}
+	@PostMapping("json/addProduct")
+	public Product addProduct(@RequestBody Product product) throws Exception {
+		// arg 단계에서 form 을 binding하고 request scope 에 productToAdd라는 이름으로 넣었다.
+		System.out.println("addProduct");
+
+		// business logic
+		Product addedProduct = productService.addProduct(product);
+		return addedProduct;
 	}
 
 

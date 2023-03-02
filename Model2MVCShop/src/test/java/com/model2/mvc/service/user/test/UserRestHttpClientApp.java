@@ -32,17 +32,17 @@ public class UserRestHttpClientApp {
 		// 1.1 Http Get 방식 Request : JsonSimple lib 사용
 		UserRestHttpClientApp.getUserTest_JsonSimple();
 		
-//		System.out.println("\n====================================\n");
+		System.out.println("\n====================================\n");
 //		// 1.2 Http Get 방식 Request : CodeHaus lib 사용
-//		RestHttpClientApp.getUserTest_Codehaus();
+		UserRestHttpClientApp.getUserTest_Codehaus();
 		
-//		System.out.println("\n====================================\n");
+		System.out.println("\n====================================\n");
 //		// 2.1 Http Post 방식 Request : JsonSimple lib 사용
-//		RestHttpClientApp.LoginTest_JsonSimple();
+		//UserRestHttpClientApp.LoginTest_JsonSimple();
 		
-//		System.out.println("\n====================================\n");
+		System.out.println("\n====================================\n");
 //		// 1.2 Http Post 방식 Request : CodeHaus lib 사용
-//		RestHttpClientApp.LoginTest_Codehaus();		
+		//UserRestHttpClientApp.LoginTest_Codehaus();		
 	
 	}
 	
@@ -119,10 +119,10 @@ public class UserRestHttpClientApp {
 		
 		//==> API 확인 : Stream 객체를 직접 전달 
 		JSONObject jsonobj = (JSONObject)JSONValue.parse(br);
-		System.out.println(jsonobj);
+		System.out.println(jsonobj.get("user"));
 	
 		ObjectMapper objectMapper = new ObjectMapper();
-		 User user = objectMapper.readValue(jsonobj.toString(), User.class);
+		 User user = objectMapper.readValue(jsonobj.get("user").toString(), User.class);
 		 System.out.println(user);
 	}
 //================================================================//	
