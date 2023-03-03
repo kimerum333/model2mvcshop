@@ -7,18 +7,24 @@
 <title>상품등록</title>
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../javascript/calendar.js">
 </script>
 
 <script type="text/javascript">
-<!--
+
 function fncAddProduct(){
 	//Form 유효성 검증
- 	var name = document.detailForm.prodName.value;
-	var detail = document.detailForm.prodDetail.value;
-	var manuDate = document.detailForm.manuDate.value;
-	var price = document.detailForm.price.value;
-
+ 	var name = //document.detailForm.prodName.value;
+ 				$("input:contains('prodName')").val();
+			//$("input[name='prodName']").val();
+	var detail = //document.detailForm.prodDetail.value;
+				$("input:contains('prodDetail')").val();
+	var manuDate = //document.detailForm.manuDate.value;
+				$("input:contains('manuDate')").val();
+	var price = //document.detailForm.price.value;
+				$("input:contains('price')").val();
+				
 	if(name == null || name.length<1){
 		alert("상품명은 반드시 입력하여야 합니다.");
 		return;
@@ -35,21 +41,59 @@ function fncAddProduct(){
 		alert("가격은 반드시 입력하셔야 합니다.");
 		return;
 	}
-
-	document.detailForm.action='/product/addProduct';
-	document.detailForm.submit();
+	//submit 등록은 event로 처리
+	/* document.detailForm.action='/product/addProduct';
+	document.detailForm.submit(); */
+	$("form").attr("method" , "POST").attr("action" , "/product/addProduct").submit();
 }
 
-function resetData(){
+//달력 보여주기 이벤트
+//onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)"
+// <td width="104" class="ct_write">
+//				제조일자 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+//			</td>
+$(function(){
+	$("#calenderView").on("click",function(){
+		//alert("실행이되긴하니?");
+		//show_calendar($("input:contains('manuDate')").val(),$("input:contains('manuDate')").attr('value'));
+		show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value);
+	});
+});
+
+
+
+/* function resetData(){
 	document.detailForm.reset();
-}
--->
+} */
+
+//==> 추가된부분 : "취소"  Event 처리 및  연결
+$(function() {
+	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+	 $( "td.ct_btn01:contains('취소')" ).on("click" , function() {
+			//Debug..
+			//alert(  $( "td.ct_btn01:contains('취소')" ).html() );
+			$("form")[0].reset();
+	});
+});	
+
+//등록 event 연결
+$(function() {
+	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+	 $( "td.ct_btn01:contains('등록')" ).on("click" , function() {
+		//Debug..
+		//alert(  $( "td.ct_btn01:contains('가입')" ).html() );
+		fncAddProduct();
+	});
+});	
+
 </script>
 
 </head>
 <body bgcolor="#ffffff" text="#000000">
 
-<form name="detailForm" method="post">
+<form name="detailForm">
 <%-- enctype="multipart/form-data"	 --%>
 	<table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 		<tr>
@@ -113,9 +157,8 @@ function resetData(){
 			<td bgcolor="D6D6D6" width="1"></td>
 			<td class="ct_write01">
 				<input type="text" name="manuDate" readonly="readonly" class="ct_input_g"  
-							style="width: 100px; height: 19px"	maxLength="10" minLength="6"/>
-					&nbsp;<img src="../images/ct_icon_date.gif" width="15" height="15" 
-											onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)"/>
+							style="width: 100px; height: 19px"	maxLength="10" minLength="6" value=""/>
+					&nbsp;<img id = "calenderView" src="../images/ct_icon_date.gif" width="15" height="15" />
 			</td>
 		</tr>
 		<tr>
@@ -157,7 +200,8 @@ function resetData(){
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01"  style="padding-top: 3px;">
-						<a href="javascript:fncAddProduct();">등록</a>
+						<!-- <a href="javascript:fncAddProduct();">등록</a> -->
+						등록
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
@@ -167,7 +211,8 @@ function resetData(){
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01"	 style="padding-top: 3px;">
-						<a href="javascript:resetData();">취소</a>
+						<!-- <a href="javascript:resetData();">취소</a> -->
+						취소
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
