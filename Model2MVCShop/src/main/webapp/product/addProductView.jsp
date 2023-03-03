@@ -16,14 +16,16 @@
 function fncAddProduct(){
 	//Form 유효성 검증
  	var name = //document.detailForm.prodName.value;
- 				$("input:contains('prodName')").val();
+ 				$("input[name='prodName']").val();
 			//$("input[name='prodName']").val();
 	var detail = //document.detailForm.prodDetail.value;
-				$("input:contains('prodDetail')").val();
+				$("input[name='prodDetail']").val();
 	var manuDate = //document.detailForm.manuDate.value;
-				$("input:contains('manuDate')").val();
+				$("input[name='manuDate']").val();
 	var price = //document.detailForm.price.value;
-				$("input:contains('price')").val();
+				$("input[name='price']").val();
+				
+	alert("받은값확인"+name+detail+manuDate+price+"들입니다.");
 				
 	if(name == null || name.length<1){
 		alert("상품명은 반드시 입력하여야 합니다.");
@@ -55,7 +57,7 @@ function fncAddProduct(){
 $(function(){
 	$("#calenderView").on("click",function(){
 		//alert("실행이되긴하니?");
-		//show_calendar($("input:contains('manuDate')").val(),$("input:contains('manuDate')").attr('value'));
+		//show_calendar($("input:contains('manuDate')").val(),$("input:contains('manuDate')[value='']").val());
 		show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value);
 	});
 });

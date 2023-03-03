@@ -7,12 +7,61 @@
 <title>상품 목록조회</title>
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
+<!-- CDN(Content Delivery Network) 호스트 사용 -->
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 	// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
 	function fncGetList(currentPage) {
-		document.getElementById("currentPage").value = currentPage;
-	   	document.detailForm.submit();		
+		$("#currentPage").val(currentPage);
+	   	//document.detailForm.submit();	
+	   	//method의 어트리뷰트를 세팅, 
+	   	$("form").attr("method","POST").attr("action","/product/listProduct").submit();
 	}
+	
+	//init
+	 $(function() {
+		 
+		 	//확인용 디버그
+		 	//<input type="hidden" name="menu" value="${param.menu}" />
+		 	alert($("input[name='menu']").val());
+		 	alert($("input:contains('menu')").val());
+		 	 
+		 
+			//==> 검색 Event 연결처리부분
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함. 
+			$( "td.ct_btn01:contains('검색')" ).on("click" , function() {
+				//Debug..
+				//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
+				fncGetList(1);
+			});
+			
+			
+			//상품명을 붉게 물들이는 태그. 
+			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
+			$("h7").css("color" , "red");
+			
+			//pagesize 가 3이기 때문에 4의 배수로 둬야 번갈아가면서 흰검이 이어진다.
+			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");	
+			
+			//==> prodNo LINK Event 연결처리 (manage 냐 search냐에 따라)
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> 3 과 1 방법 조합 : $(".className tagName:filter함수") 사용함.
+			$( ".ct_list_pop td:nth-child(3)" ).on("click" , function() {
+					//Debug..
+					//alert(  $( this ).text().trim() );
+					//self.location ="/user/getUser?userId="+$(this).text().trim();
+					/* if($("input[name='menu']")){
+						
+					}
+					if(){
+						
+					} */
+					
+			});
+			
+			
+	 }//end of init func
 </script>
 
 </head>
