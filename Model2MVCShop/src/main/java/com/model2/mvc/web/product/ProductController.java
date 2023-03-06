@@ -108,6 +108,7 @@ public class ProductController {
 	public String updateProduct(@RequestParam("prodNo") int prodNo, HttpServletRequest request) throws Exception {
 		System.out.println("updateProduct : GET METHOD");
 		Product updatingProduct = productService.getProduct(prodNo);
+		
 		request.setAttribute("product", updatingProduct);
 
 		return "forward:/product/updateProductView.jsp";
@@ -119,7 +120,8 @@ public class ProductController {
 		productService.updateProduct(updatingProduct);
 
 		int prodNo = updatingProduct.getProdNo();
+		System.out.println("상품번호는..."+prodNo);
 		// get으로 태워보내서 등록상품을 보여주겠다.
-		return "redirect:/getProduct?prodNo=" + prodNo;
+		return "redirect:/product/getProduct?prodNo=" + prodNo;
 	}
 }

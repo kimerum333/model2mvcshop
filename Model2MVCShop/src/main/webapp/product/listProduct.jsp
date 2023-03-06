@@ -23,8 +23,8 @@
 		 
 		 	//확인용 디버그
 		 	//<input type="hidden" name="menu" value="${param.menu}" />
-		 	alert($("input[name='menu']").val());
-		 	alert($("input:contains('menu')").val());
+		 	var menu = $("input[name='menu']").val();
+		 	//alert(menu);
 		 	 
 		 
 			//==> 검색 Event 연결처리부분
@@ -38,7 +38,7 @@
 			
 			
 			//상품명을 붉게 물들이는 태그. 
-			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
+			$(".productNameInFor").css("color" , "red");
 			$("h7").css("color" , "red");
 			
 			//pagesize 가 3이기 때문에 4의 배수로 둬야 번갈아가면서 흰검이 이어진다.
@@ -47,21 +47,31 @@
 			//==> prodNo LINK Event 연결처리 (manage 냐 search냐에 따라)
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			//==> 3 과 1 방법 조합 : $(".className tagName:filter함수") 사용함.
-			$( ".ct_list_pop td:nth-child(3)" ).on("click" , function() {
+			
+			//<a href="${nextLocation}?prodNo=${product.prodNo}&menu=${param.menu}">
+			
+			
+			//==> productList LINK Event 연결처리
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> 3 과 1 방법 조합 : $(".className tagName:filter함수") 사용함.
+			$( ".productNameInFor" ).on("click" , function() {
 					//Debug..
-					//alert(  $( this ).text().trim() );
-					//self.location ="/user/getUser?userId="+$(this).text().trim();
-					/* if($("input[name='menu']")){
-						
+					
+					if(menu=='manage'){
+						//alert(  $( this ).find('input[type="hidden"]').val().trim() );
+						var prodNo = $( this ).find('input[type="hidden"]').val().trim();
+						self.location ="/product/updateProduct?prodNo="+prodNo;
 					}
-					if(){
-						
-					} */
+					if(menu=='search'){
+						alert("상품구매페이지를 준비중입니다.");	
+					}
+
 					
 			});
 			
 			
-	 }//end of init func
+			
+	 });//end of init func
 </script>
 
 </head>
@@ -135,7 +145,15 @@
 	<tr>
 		<td class="ct_list_b" width="100">No</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">상품명</td>
+		<td class="ct_list_b" width="150">
+			상품명<br>
+			<c:if test="${param.menu eq 'search'}" >
+				<h7 >(상품 click: 구매)</h7>
+			</c:if>
+			<c:if test="${param.menu eq 'manage'}" >
+				<h7 >(상품 click: 상품수정)</h7>
+			</c:if>
+		</td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">가격</td>
 		<td class="ct_line02"></td>
@@ -150,7 +168,7 @@
 	<c:set var="i" value="0"/>
 	<c:forEach var="product" items="${list}">
 		<c:set var="i" value="${i+1}"/>
-		<tr class="ct_list_pop">
+	<tr class="ct_list_pop">
 			<td align="center">${i}</td>
 			<td></td>
 			<c:set var="nextLocation" value="/product/getProduct"/>
@@ -160,8 +178,11 @@
 			<c:if test="${param.menu eq 'manage'}">
 				<c:set var="nextLocation" value="/product/updateProduct"/>
 			</c:if>
-			
-			<td align="left"><a href="${nextLocation}?prodNo=${product.prodNo}&menu=${param.menu}"> ${product.prodName}${product.prodNo} </a></td>
+<%-- 			<a href="${nextLocation}?prodNo=${product.prodNo}&menu=${param.menu}"> --%>
+				<td align="left" class="productNameInFor"> 
+					<input type="hidden" value="${product.prodNo}">
+					${product.prodName}
+				</td>
 			
 			<td></td>
 			<td align="left">${product.price}</td>
@@ -180,10 +201,10 @@
 			<c:if test="${product.proTranCode eq 'don'}"> 배송완료	
 			</c:if>
 			</td>	
-		</tr>
-		<tr>
+	</tr>
+	<tr>
 			<td colspan="11" bgcolor="D6D7D6" height="1"></td>
-		</tr>
+	</tr>
 	<%//TODO 여기에 판매관리 구현해야함 %>	
 	</c:forEach>
 	

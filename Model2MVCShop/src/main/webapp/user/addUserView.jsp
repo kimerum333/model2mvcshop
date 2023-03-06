@@ -61,10 +61,13 @@
 			//}
 			
 			var value = "";	
-			if( $("input:text[name='phone2']").val() != ""  &&  $("input:text[name='phone3']").val() != "") {
-				var value = $("option:selected").val() + "-" 
-									+ $("input[name='phone2']").val() + "-" 
-									+ $("input[name='phone3']").val();
+			if( $("input:text[name='phone2']").val() != ""  &&
+					$("input:text[name='phone3']").val() != "") {
+				var value = $("option:selected").val()
+							+ "-" 
+							+ $("input[name='phone2']").val()
+							+ "-" 
+							+ $("input[name='phone3']").val();
 			}
 			//Debug..
 			//alert("phone : "+value)
