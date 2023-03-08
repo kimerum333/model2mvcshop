@@ -2,7 +2,10 @@ package com.model2.mvc.web.product;
 
 import java.io.File;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -66,25 +69,33 @@ public class ProductController {
 			(value="imageBinary",required=false)MultipartFile file,HttpServletRequest request) throws Exception {
 		// arg 단계에서 form 을 binding하고 request scope 에 productToAdd라는 이름으로 넣었다.
 		System.out.println("addProduct");
-		//이미지파일의 파일명
+		//이미지파일의 파일명과 사이즈를 확보
 		String imageFileName = file.getOriginalFilename();
+		//나중을 위한 확장자 substring 메모
+		String fileExtension = imageFileName.substring(imageFileName.lastIndexOf("."),imageFileName.length());
+		System.out.println("파일 확장자는..."+fileExtension);
 		long imageFileSize = file.getSize();
 		
+		//현재시각을 구한다.
+		Date date = new Date();
+		//SimpleDateFormat으로 현재시각을 적절한 문자로 가공한다.
+		SimpleDateFormat sDate= new SimpleDateFormat("yyyyMMddHHmmss");
+		String now = sDate.format(date);
+		System.out.println(now);
+		//파일이름과 현재시각을 더해서 유니크한 서버저장파일명을 형성한다. 
+		String savingFileName = now+imageFileName;
 		
 		//파일이 저장될 위치를 확보해야한다.
-		URL r = this.getClass().getResource("");
-		String path = r.getPath();
+		String uploadPath = request.getServletContext().getRealPath("/images/uploadFiles/");
+		System.out.println("파일이 저장될 위치는..."+uploadPath);
 
-		System.out.println(path);
-		//파일이 들어오면 위치에 저장합니다.
-		//파일이름 파싱
-		//String fileName = file.getOriginalFilename();
-		//저장될 최종경로
-		//String finalDestination = FILE_SERVER_PATH+"/"+fileName;
-		
-		//경로에 저장될 파일 데이터를 형성한다.
-		//File filePath = new File(finalDestination);
-		//file.transferTo(filePath);
+		//파일 생성
+		File saveFile = new File(uploadPath+"\\"+savingFileName);
+			try {
+				file.transferTo(saveFile);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 
 		// business logic
 		Product addedProduct = productService.addProduct(product);
