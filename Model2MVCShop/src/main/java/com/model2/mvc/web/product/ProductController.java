@@ -87,18 +87,27 @@ public class ProductController {
 		
 		//파일이 저장될 위치를 확보해야한다.
 		String uploadPath = request.getServletContext().getRealPath("/images/uploadFiles/");
-		System.out.println("파일이 저장될 위치는..."+uploadPath);
+		String finalDestination = uploadPath+savingFileName;
+		System.out.println("파일이 저장될 위치와 경로는..."+finalDestination);
+		
+		/*
+		 * //sql val check if(finalDestination.length()>100) {
+		 * System.out.println(finalDestination.length()); throw new
+		 * Exception("파일 이름이 너무 깁니다."); }
+		 */
 
-		//파일 생성
-		File saveFile = new File(uploadPath+"\\"+savingFileName);
+		//파일 생성 후 위치에 저장
+		File saveFile = new File(finalDestination);
 			try {
 				file.transferTo(saveFile);
 			}catch(Exception e){
 				e.printStackTrace();
 			}
+		//업로드된 파일경로를 바인드.
+		product.setFileName(savingFileName);
 
 		// business logic
-		Product addedProduct = productService.addProduct(product);
+		Product addedProduct = productService.addProduct(product);		
 		int prodNo = addedProduct.getProdNo();
 		System.out.println("등록한 상품의 " + prodNo);
 		
