@@ -67,6 +67,9 @@
 	<!--  :: ViewResolver 선언 -->	
     <bean id="viewResolver"
 				class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
+				
+	<!--파일 업로드를 위한 멀티파트리졸버 와이어링.  -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />		
 	
 <!--	
 	■ / 형식의 Mapping 은 모든(정적,동적 자원) 요청시 처리책임

@@ -1,7 +1,10 @@
 package com.model2.mvc.web.product;
 
+import java.io.File;
+import java.net.URL;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
@@ -58,9 +62,29 @@ public class ProductController {
 
 	/// Method
 	@PostMapping("addProduct")
-	public String addProduct(@ModelAttribute("productToAdd") Product product) throws Exception {
+	public String addProduct(@ModelAttribute("product") Product product,@RequestParam
+			(value="imageBinary",required=false)MultipartFile file,HttpServletRequest request) throws Exception {
 		// arg 단계에서 form 을 binding하고 request scope 에 productToAdd라는 이름으로 넣었다.
 		System.out.println("addProduct");
+		//이미지파일의 파일명
+		String imageFileName = file.getOriginalFilename();
+		long imageFileSize = file.getSize();
+		
+		
+		//파일이 저장될 위치를 확보해야한다.
+		URL r = this.getClass().getResource("");
+		String path = r.getPath();
+
+		System.out.println(path);
+		//파일이 들어오면 위치에 저장합니다.
+		//파일이름 파싱
+		//String fileName = file.getOriginalFilename();
+		//저장될 최종경로
+		//String finalDestination = FILE_SERVER_PATH+"/"+fileName;
+		
+		//경로에 저장될 파일 데이터를 형성한다.
+		//File filePath = new File(finalDestination);
+		//file.transferTo(filePath);
 
 		// business logic
 		Product addedProduct = productService.addProduct(product);

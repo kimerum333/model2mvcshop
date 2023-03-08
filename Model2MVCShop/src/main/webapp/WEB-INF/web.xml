@@ -76,6 +76,16 @@
 		</init-param>
 		
 		<load-on-startup>1</load-on-startup>
+		
+		<!-- fileupload multipart-config maxSize set -->
+		<multipart-config>
+    	    <max-file-size>104857600</max-file-size> <!-- 10MB limit -->
+        	<max-request-size>104857600</max-request-size>
+        	<file-size-threshold>0</file-size-threshold> <!--메모리에 나눠로딩하는 양  -->
+    	</multipart-config>
+    	<!-- fileupload multipart-config -->
+		
+		
 	</servlet>
 		
 	<!-- 우리는 .do 매핑을 버리기로 했다.
