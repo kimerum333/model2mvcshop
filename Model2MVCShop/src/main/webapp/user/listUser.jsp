@@ -16,35 +16,146 @@
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript">
 	
-		//=====기존Code 주석 처리 후  jQuery 변경 ======//
-		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
+
 		function fncGetList(currentPage) {
-			//document.getElementById("currentPage").value = currentPage;
 			$("#currentPage").val(currentPage)
-		   	//document.detailForm.submit();
 			$("form").attr("method" , "POST").attr("action" , "/user/listUser").submit();
 		}
-		//===========================================//
-		//==> 추가된부분 : "검색" ,  userId link  Event 연결 및 처리
+		
+		
+			
+
+		//init script
 		 $(function() {
+			 //유저아이디 검색 오토컴플리트
+			 var previousTimeout = null;
+			 var availableTags = new array(5);
+			 availableTags = [];
+			 $("input[name=searchKeyword]").on("keydown",function(){
+				
+				 if(previousTimeout!=null){
+				 clearTimeout(previousTimeout);
+				 }
+				 previousTimeout =
+				 setTimeout(function(){
+					 var searchCondition = $("select[name='searchCondition'] option:selected").val();
+					 var searchKeyword = $("input[name='searchKeyword']").val();
+					 //alert(searchCondition);
+					 //alert(searchKeyword);
+					 
+					 $.ajax( 
+								{
+									url : "/user/json/listUserAutocomplete/"+searchCondition+searchKeyword ,
+									method : "GET" ,
+									dataType : "json" ,
+									headers : {
+										"Accept" : "application/json",
+										"Content-Type" : "application/json"
+									},
+									success : function(JSONData , status) {
+
+										//Debug...
+										//Succes 라는 상태가 찍힌다.
+										//alert(status);
+										//Debug...
+										//Object 가 찍힌다.
+										//alert("JSONData : \n"+JSONData);
+										
+										var totalCount = JSONData.totalCount;
+										var userList = JSONData.list;
+										var searchCondition = JSONData.searchCondition;
+										var autocompleteUnit = 3;
+										
+										
+										
+										//alert(totalCount);
+										//alert(userList[0].userId);
+										if(searchCondition=='0'){
+											var displayValue = 
+												""
+											for(var i=0;i<autocompleteUnit;i++){
+												userList[i].userId
+											}	
+										}
+										
+										
+									/* 	
+										var displayValue = "<h3>"
+											+"아이디 : "+JSONData.userId+"<br/>"
+											+"이  름 : "+JSONData.userName+"<br/>"
+											+"이메일 : "+JSONData.email+"<br/>"
+											+"ROLE : "+JSONData.role+"<br/>"
+											+"등록일 : "+JSONData.regDateString+"<br/>"
+											+"</h3>" */
+										
+										/* var displayValue = "<h3>"
+																	+"아이디 : "+JSONData.userId+"<br/>"
+																	+"이  름 : "+JSONData.userName+"<br/>"
+																	+"이메일 : "+JSONData.email+"<br/>"
+																	+"ROLE : "+JSONData.role+"<br/>"
+																	+"등록일 : "+JSONData.regDateString+"<br/>"
+																	+"</h3>"; 
+										//Debug...									
+										//alert(displayValue);
+										$("h3").remove();
+										$( "#"+userId+"" ).html(displayValue);*/
+									}
+								});
+					 
+					 },1500);
+				 
+			 });
 			 
-			//==> 검색 Event 연결처리부분
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함. 
+			//오토컴플리트 최종적용
+			$( "#tags" ).autocomplete({
+				      source: availableTags
+				    });
+			 
+			 
+			 //검색버튼 클릭시 submit(current page 전송하면서)
 			 $( "td.ct_btn01:contains('검색')" ).on("click" , function() {
-				//Debug..
-				//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
 				fncGetList(1);
 			});
 			
-			
-			//==> userId LINK Event 연결처리
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			//==> 3 과 1 방법 조합 : $(".className tagName:filter함수") 사용함.
+			//View된 회원ID클릭시 창 하나 만들어서 띄워주는 Event
 			$( ".ct_list_pop td:nth-child(3)" ).on("click" , function() {
 					//Debug..
 					//alert(  $( this ).text().trim() );
-					self.location ="/user/getUser?userId="+$(this).text().trim();
+					//self.location ="/user/getUser?userId="+$(this).text().trim();
+					var userId = $(this).text().trim();
+					alert(userId);
+					$.ajax( 
+							{
+								url : "/user/json/getUser/"+userId ,
+								method : "GET" ,
+								dataType : "json" ,
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								success : function(JSONData , status) {
+
+									//Debug...
+									//Succes 라는 상태가 찍힌다.
+									alert(status);
+									//Debug...
+									//Object 가 찍힌다.
+									alert("JSONData : \n"+JSONData);
+									
+									var displayValue = "<h3>"
+																+"아이디 : "+JSONData.userId+"<br/>"
+																+"이  름 : "+JSONData.userName+"<br/>"
+																+"이메일 : "+JSONData.email+"<br/>"
+																+"ROLE : "+JSONData.role+"<br/>"
+																+"등록일 : "+JSONData.regDateString+"<br/>"
+																+"</h3>";
+									//Debug...									
+									//alert(displayValue);
+									$("h3").remove();
+									$( "#"+userId+"" ).html(displayValue);
+								}
+							});
+
 			});
 			
 			//==> UI 수정 추가부분  :  userId LINK Event End User 에게 보일수 있도록 
@@ -53,7 +164,8 @@
 			
 			
 			//==> 아래와 같이 정의한 이유는 ??
-			//==> 아래의 주석을 하나씩 풀어 가며 이해하세요.					
+			//==> 아래의 주석을 하나씩 풀어 가며 이해하세요.
+			//page unit이 3이니까, 4의 배수로 색을 바꿔버리면 번갈아가면서 색이 바뀐다.
 			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
 			//console.log ( $(".ct_list_pop:nth-child(1)" ).html() );
 			//console.log ( $(".ct_list_pop:nth-child(2)" ).html() );
@@ -163,10 +275,10 @@
 			<td align="left">${user.userName}</td>
 			<td></td>
 			<td align="left">${user.email}
-			</td>		
+			</td>
 		</tr>
 		<tr>
-		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
+			<td id="${user.userId}" colspan="11" bgcolor="D6D7D6" height="1"></td>		
 		</tr>
 	</c:forEach>
 </table>

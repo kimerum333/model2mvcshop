@@ -34,34 +34,42 @@ public class UserRestController {
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 	//setter Method 구현 않음
+	@Value("#{commonProperties['pageUnit']}")
+	// @Value("#{commonProperties['pageUnit'] ?: 3}")
+	int pageUnit;
+
+	@Value("#{commonProperties['pageSize']}")
+	// @Value("#{commonProperties['pageSize'] ?: 2}")
+	int pageSize;
 		
 	public UserRestController(){
 		System.out.println(this.getClass()+" instance on");
 	}
 	
+	
+	  @RequestMapping( value="json/getUser/{userId}", method=RequestMethod.GET )
+	  public User getUser( @PathVariable String userId ) throws Exception{
+	  
+	  System.out.println("/user/json/getUser : GET");
+	  
+	  //Business Logic
+	  return userService.getUser(userId);
+	  }
+	 
+	
 	/*
 	 * @RequestMapping( value="json/getUser/{userId}", method=RequestMethod.GET )
-	 * public User getUser( @PathVariable String userId ) throws Exception{
+	 * public Map getUser( @PathVariable String userId ) throws Exception{
 	 * 
 	 * System.out.println("/user/json/getUser : GET");
 	 * 
-	 * //Business Logic return userService.getUser(userId); }
+	 * //Business Logic
+	 * 
+	 * User dbUser = userService.getUser(userId); System.out.println("dbUser is" +
+	 * dbUser); Map map = new HashMap(); map.put("user",dbUser);
+	 * 
+	 * return map; }
 	 */
-	
-	@RequestMapping( value="json/getUser/{userId}", method=RequestMethod.GET )
-	public Map getUser( @PathVariable String userId ) throws Exception{
-		
-		System.out.println("/user/json/getUser : GET");
-		
-		//Business Logic
-		
-		User dbUser = userService.getUser(userId);
-		System.out.println("dbUser is" + dbUser);
-		Map map = new HashMap();
-		map.put("user",dbUser);
-		
-		return map;
-	}
 	
 
 	@RequestMapping( value="json/login", method=RequestMethod.POST )
@@ -79,4 +87,21 @@ public class UserRestController {
 		
 		return dbUser;
 	}
+	
+	@RequestMapping(value="/json/listUserAutocomplete/{searchConditionSearchKeyword}",method=RequestMethod.GET)
+	public Map listUserAutocomplete(@PathVariable String searchConditionSearchKeyword) throws Exception {
+		String searchCondition = searchConditionSearchKeyword.substring(0,1);
+		String searchKeyword = searchConditionSearchKeyword.substring(1);
+		
+		Search search = new Search();
+		search.setSearchCondition(searchCondition);
+		search.setSearchKeyword(searchKeyword);
+		search.setCurrentPage(1);
+		search.setPageSize(pageSize);
+		Map map = userService.getUserList(search);
+		map.put("searchCondition", searchCondition);
+		
+		return map;
+	}
+	
 }
