@@ -15,7 +15,7 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-		 <!--리스너의 프로퍼티로 주는게 아닌데 리스너는 콘텍스트파람을 어떻게 받아먹을까?  -->
+		
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
