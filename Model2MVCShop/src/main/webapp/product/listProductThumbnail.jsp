@@ -22,11 +22,8 @@ $(function(){
 });
 
 function nextPageMaker(data, status){
-	console.log("start of nextPageMaker()");
+	console.log("start of needCurrentPage()");
 	console.log(JSON.stringify(data));
-	let productList = data.list;
-	let i = 0;
-	console.log(productList[i]);
 }
 
 function needCurrentPage(){
@@ -34,7 +31,7 @@ function needCurrentPage(){
 	console.log("currentPage is "+currentPage);
 	$.ajax(
 		{
-	   		url: "/product/json/listProduct/"+currentPage, 
+	   		url: "localhost:8080/product/json/listProduct/"+currentPage, 
 	    	method: "GET",   
 	    	dataType: "json" ,
 	    	headers : {

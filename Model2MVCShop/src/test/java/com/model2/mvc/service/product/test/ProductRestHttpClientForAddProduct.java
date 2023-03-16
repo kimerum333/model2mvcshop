@@ -26,8 +26,6 @@ public class ProductRestHttpClientForAddProduct {
 		
 		System.out.println("addProduct_Jackson_String_Post() 실행");
 		ProductRestHttpClientForAddProduct.addProduct_Jackson_String_Post();
-		
-		
 	}
 	
 	//http 모사 Client
