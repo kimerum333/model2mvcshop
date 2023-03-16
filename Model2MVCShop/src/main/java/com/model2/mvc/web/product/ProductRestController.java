@@ -3,25 +3,17 @@ package com.model2.mvc.web.product;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpRequest;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.product.ProductService;
@@ -35,6 +27,14 @@ public class ProductRestController {
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
+	
+	@Value("#{commonProperties['pageUnit']}")
+	// @Value("#{commonProperties['pageUnit'] ?: 3}")
+	int pageUnit;
+
+	@Value("#{commonProperties['pageSize']}")
+	// @Value("#{commonProperties['pageSize'] ?: 2}")
+	int pageSize;
 
 
 	/// Constructor
@@ -77,6 +77,20 @@ public class ProductRestController {
 		Product addedProduct = productService.addProduct(product);
 		System.out.println(addedProduct);
 		return addedProduct;
+	}
+
+	@RequestMapping("json/listProduct/{currentPage}")
+	public Map listProduct(@PathVariable int currentPage) throws Exception {
+		System.out.println("json/listProduct called");
+		
+		Search search = new Search();
+		search.setCurrentPage(currentPage);
+		search.setPageSize(pageSize);// properties로부터 Spring EL로 가져온 pageSize 바인딩
+
+		// Business Logic
+		Map<String, Object> map = productService.getProductList(search);
+
+		return map;
 	}
 
 

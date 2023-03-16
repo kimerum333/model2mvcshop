@@ -119,10 +119,10 @@
 
 									//Debug...
 									//Succes 라는 상태가 찍힌다.
-									alert(status);
+									console.log(status);
 									//Debug...
 									//Object 가 찍힌다.
-									alert("JSONData : \n"+JSONData);
+									console.log("JSONData : \n"+JSONData);
 									
 									var displayValue = "<h3>"
 																+"아이디 : "+JSONData.userId+"<br/>"
