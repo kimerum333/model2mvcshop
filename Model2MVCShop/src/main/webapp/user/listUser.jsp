@@ -9,11 +9,14 @@
 <head>
 	<meta charset="EUC-KR">
 	<title>회원 목록 조회</title>
-	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="/css/admin.css" type="text/css">
 	
 	<!-- CDN(Content Delivery Network) 호스트 사용 -->
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	
 	<script type="text/javascript">
 	
 
@@ -29,10 +32,10 @@
 		 $(function() {
 			 //유저아이디 검색 오토컴플리트
 			 var previousTimeout = null;
-			 var availableTags = new array(5);
-			 availableTags = [];
+			 var availableTags = [];
 			 $("input[name=searchKeyword]").on("keydown",function(){
 				
+				 availableTags = [];
 				 if(previousTimeout!=null){
 				 clearTimeout(previousTimeout);
 				 }
@@ -40,8 +43,8 @@
 				 setTimeout(function(){
 					 var searchCondition = $("select[name='searchCondition'] option:selected").val();
 					 var searchKeyword = $("input[name='searchKeyword']").val();
-					 //alert(searchCondition);
-					 //alert(searchKeyword);
+					 console.log("입력된 condition"+searchCondition);
+					 console.log("입력된 keyword"+searchKeyword);
 					 
 					 $.ajax( 
 								{
@@ -71,34 +74,16 @@
 										//alert(totalCount);
 										//alert(userList[0].userId);
 										if(searchCondition=='0'){
-											var displayValue = 
-												""
 											for(var i=0;i<autocompleteUnit;i++){
-												userList[i].userId
+												availableTags.push(userList[i].userId);
 											}	
 										}
-										
-										
-									/* 	
-										var displayValue = "<h3>"
-											+"아이디 : "+JSONData.userId+"<br/>"
-											+"이  름 : "+JSONData.userName+"<br/>"
-											+"이메일 : "+JSONData.email+"<br/>"
-											+"ROLE : "+JSONData.role+"<br/>"
-											+"등록일 : "+JSONData.regDateString+"<br/>"
-											+"</h3>" */
-										
-										/* var displayValue = "<h3>"
-																	+"아이디 : "+JSONData.userId+"<br/>"
-																	+"이  름 : "+JSONData.userName+"<br/>"
-																	+"이메일 : "+JSONData.email+"<br/>"
-																	+"ROLE : "+JSONData.role+"<br/>"
-																	+"등록일 : "+JSONData.regDateString+"<br/>"
-																	+"</h3>"; 
-										//Debug...									
-										//alert(displayValue);
-										$("h3").remove();
-										$( "#"+userId+"" ).html(displayValue);*/
+										console.log(availableTags);
+										//오토컴플리트 최종적용
+										$( "input[name=searchKeyword]" ).autocomplete({
+											      source: availableTags
+										});
+									
 									}
 								});
 					 
@@ -106,10 +91,7 @@
 				 
 			 });
 			 
-			//오토컴플리트 최종적용
-			$( "#tags" ).autocomplete({
-				      source: availableTags
-				    });
+			
 			 
 			 
 			 //검색버튼 클릭시 submit(current page 전송하면서)
@@ -213,9 +195,11 @@
 				<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>회원ID</option>
 				<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원명</option>
 			</select>
-			<input type="text" name="searchKeyword" 
+			<div>
+				<input type="text" name="searchKeyword" 
 						value="${! empty search.searchKeyword ? search.searchKeyword : ""}"  
-						class="ct_input_g" style="width:200px; height:20px" > 
+						class="ct_input_g" style="width:200px; height:20px" />
+			</div> 
 		</td>
 		<td align="right" width="70">
 			<table border="0" cellspacing="0" cellpadding="0">
