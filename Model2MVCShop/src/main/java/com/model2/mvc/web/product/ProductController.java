@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -167,5 +168,14 @@ public class ProductController {
 		System.out.println("상품번호는..."+prodNo);
 		// get으로 태워보내서 등록상품을 보여주겠다.
 		return "redirect:/product/getProduct?prodNo=" + prodNo;
+	}
+	
+	@PostMapping("summernoteTest")
+	public String summernoteTest(Product updatingProduct,HttpServletRequest request) throws Exception {
+		System.out.println("summernoteTest method on");
+		
+		String editordata= request.getParameter("editordata");
+		System.out.println(editordata);
+		return null;
 	}
 }
