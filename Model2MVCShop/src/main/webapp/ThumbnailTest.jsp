@@ -22,11 +22,44 @@ $(function(){
 });
 
 function nextPageMaker(data, status){
+	
 	console.log("start of nextPageMaker()");
 	console.log(JSON.stringify(data));
 	let productList = data.list;
-	let i = 0;
-	console.log(productList[i]);
+	//let i = 0;
+	//console.log(productList[i]);
+	for(let i=0;i<3;i++){
+		let fileName = productList[i].fileName;
+		let manuDate = productList[i].manuDate;
+		let price = productList[i].price;
+		let proTranCode = productList[i].proTranCode;
+		let prodDetail = productList[i].prodDetail;
+		let prodName = productList[i].prodName;
+		let prodNo = productList[i].prodNo;
+		let regDate = productList[i].regDate;
+		
+		console.log("debug prodName: "+prodName);
+		
+		function htmlMaker(){
+			console.log("Start of htmlMaker");
+			let string1 = '<div class="col-md-4 col-sm-6">
+            <div class="card mb-30"><a class="card-img-tiles" href="#" data-abc="true">
+            <div class="inner"><!-- 그림 들어갈 div -->
+              <div class="main-img"><img src="https://i.imgur.com/O0GMYuw.jpg" alt="Category"></div>
+              <div class="thumblist"><img src="https://i.imgur.com/ILEU18M.jpg" alt="Category"><img src="https://i.imgur.com/2kePJmX.jpg" alt="Category"></div>
+            </div></a>
+          <div class="card-body text-center"> <!-- 텍스트 들어갈 div -->
+            <h4 class="card-title">Laptops</h4> <!--  -->
+            <p class="text-muted">Starting from $499</p><a class="btn btn-outline-primary btn-sm" href="#" data-abc="true">View Products</a>
+          </div>
+        </div>
+      </div>';
+      //html 을 만들었다 씨발... 이제 저 안에 값을 잘 끼워넣으면 됨.
+		}
+		
+		
+	}
+	
 }
 
 function needCurrentPage(){
@@ -58,12 +91,12 @@ function needCurrentPage(){
        <div class="row">
           <div class="col-md-4 col-sm-6">
             <div class="card mb-30"><a class="card-img-tiles" href="#" data-abc="true">
-                <div class="inner">
+                <div class="inner"><!-- 그림 들어갈 div -->
                   <div class="main-img"><img src="https://i.imgur.com/O0GMYuw.jpg" alt="Category"></div>
                   <div class="thumblist"><img src="https://i.imgur.com/ILEU18M.jpg" alt="Category"><img src="https://i.imgur.com/2kePJmX.jpg" alt="Category"></div>
                 </div></a>
-              <div class="card-body text-center">
-                <h4 class="card-title">Laptops</h4>
+              <div class="card-body text-center"> <!-- 텍스트 들어갈 div -->
+                <h4 class="card-title">Laptops</h4> <!--  -->
                 <p class="text-muted">Starting from $499</p><a class="btn btn-outline-primary btn-sm" href="#" data-abc="true">View Products</a>
               </div>
             </div>

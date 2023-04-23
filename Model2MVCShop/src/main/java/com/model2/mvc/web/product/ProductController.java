@@ -3,9 +3,13 @@ package com.model2.mvc.web.product;
 import java.io.File;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -168,4 +172,34 @@ public class ProductController {
 		// get으로 태워보내서 등록상품을 보여주겠다.
 		return "redirect:/product/getProduct?prodNo=" + prodNo;
 	}
+	@PostMapping("summernoteControl")
+	public String summernoteControl(HttpServletRequest request) throws Exception {
+		//돌았는지 체크
+		System.out.println("summernoteControl on");
+		//html string 받은것 체크
+		String editordata = request.getParameter("editordata");
+		System.out.println(editordata);
+		
+		//html parsing
+		//String[] base64s; //base64이미지들이 들어갈 배열. writer로 파일로 만들 것이다.
+		//String resourcePath = ""; //이미지파일들을 실제로 저장할 폴더경로. 이미지 db에 넣을것이다.
+		//String uploadingUser = ""; //이미지 DB에 넣을 유저의 ID이다. 
+		
+		//String patternStringBase64Binary = "";
+		
+		//패턴 파싱
+		List<String> imageList = new ArrayList<>();
+        Pattern pattern = Pattern.compile("<img\\s+src=\"([^\"]+)\".*?>");
+        Matcher matcher = pattern.matcher(editordata);
+
+        while (matcher.find()) {
+            String image = matcher.group(1);
+            System.out.println(image);
+            imageList.add(image);
+        }
+		
+		
+		return null;
+	}
+	
 }
