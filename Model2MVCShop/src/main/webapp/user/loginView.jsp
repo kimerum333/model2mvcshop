@@ -85,6 +85,7 @@
 
 <body bgcolor="#ffffff" text="#000000" >
 
+<jsp:include page="/layout/header.jsp" flush="false"/>
 <!-- ////////////////// jQuery Event 처리로 변경됨 /////////////////////////
  <form name="loginForm"  method="post" action="/user/login" target="_parent">
 ////////////////////////////////////////////////////////////////////////////////////////////////// -->

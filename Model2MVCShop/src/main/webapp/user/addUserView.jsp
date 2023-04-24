@@ -11,7 +11,7 @@
 	
 	<link rel="stylesheet" href="/css/admin.css" type="text/css">
 	
- &&	<!-- CDN(Content Delivery Network) 호스트 사용 -->
+ 	<!-- CDN(Content Delivery Network) 호스트 사용 -->
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript">
 		
@@ -190,6 +190,7 @@
 
 <body bgcolor="#ffffff" text="#000000">
 
+<jsp:include page="/layout/header.jsp" flush="false"/>
 <!-- ////////////////// jQuery Event 처리로 변경됨 ///////////////////////// 
 <form name="detailForm"  method="post" >
 ////////////////////////////////////////////////////////////////////////////////////////////////// -->

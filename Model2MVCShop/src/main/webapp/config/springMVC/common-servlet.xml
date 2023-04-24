@@ -66,7 +66,21 @@
  -->
 	<!--  :: ViewResolver 선언 -->	
     <bean id="viewResolver"
-				class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
+				class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="2"></property>
+	</bean>
+<!-- 	<bean id="tilesViewResolver"
+	 class="org.springframework.web.servlet.view.UrlBasedViewResolver" >
+		<property name="order" value="1"></property>
+	</bean>
+	
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"> 
+		<property name="definitions"> 
+			<list> 
+				<value>/WEB-INF/spring/tiles-define.xml</value> 
+			</list> 
+		</property> 
+	</bean> -->
 				
 	<!--파일 업로드를 위한 멀티파트리졸버 와이어링.  -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />		
