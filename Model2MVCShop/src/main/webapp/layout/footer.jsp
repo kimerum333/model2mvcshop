@@ -6,42 +6,78 @@
 <head>
 <meta charset="EUC-KR">
 <title>A6's Library</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-<link rel="icon" href="images/smalllogo.svg" type="image/x-icon">
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+  <style type="text/css">
+    #my-dialog {
+      display: none;
+      position: absolute;
+      z-index: 9999;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    #my-dialog .dialog-handle {
+      cursor: move;
+    }
+    #my-dialog .close-button {
+      float: right;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-<header class="p-3 text-bg-dark">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/index.jsp" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-          <img src="/images/logo2.png" width="75px"/>
-        </a>
+<div class="btn-group dropup">
+  <button id="dropupbutton" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    Dropup
+  </button>
+  
+  <ul class="dropdown-menu">
+    <li>
+    	<button id="show-dialog-button">메모 보기</button>
+    </li>
+    <li>open memo 2</li>
+    <li>open memo 3</li>
+  </ul>
+</div>
 
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="/index.jsp" class="nav-link px-2 text-secondary">Home</a></li>
-          <li><a href="/user/getUser?userId=" class="nav-link px-2 text-white">개인정보조회</a></li>
-          <li><a href="https://getbootstrap.com/docs/5.3/examples/headers/#" class="nav-link px-2 text-white">Products</a></li>
-          <li><a href="https://getbootstrap.com/docs/5.3/examples/headers/#" class="nav-link px-2 text-white">FAQs</a></li>
-          <li><a href="https://getbootstrap.com/docs/5.3/examples/headers/#" class="nav-link px-2 text-white">About</a></li>
-        </ul>
-
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
-        </form>
-
-        <div class="text-end">
-          <c:if test="${empty user}">
-          	<button type="button" class="btn btn-outline-light me-2" onclick="location.href='/user/loginView.jsp'">Login</button>
-          </c:if>
-          <c:if test="${!empty user}">
-          	<button type="button" class="btn btn-outline-light me-2" onclick="location.href='/user/logout'">Logout</button>
-          </c:if>
-          <button type="button" class="btn btn-warning" onclick="location.href='/user/addUserView.jsp'">Sign-up</button>
-        </div>
-      </div>
-    </div>
-  </header>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<div id="my-dialog">
+    		<div class="dialog-handle">메모 제목</div>
+    		<div class="close-button">x</div>
+    		<p>This is my dialog content.</p>
+    		<form method="post" action="/product/summernoteControl">
+  				<textarea id="summernote" name="editordata"></textarea>
+  				<input type="submit" value="써브밋">
+			</form>
+</div>
+<script type="text/javascript">
+    $(function() {
+      // Make the dialog draggable
+      $("#my-dialog").draggable({
+        handle: ".dialog-handle"
+      });
+      // Show the dialog when the button is clicked
+      $("#show-dialog-button").click(function() {
+          var dialogWidth = $("#my-dialog").outerWidth();
+          var buttonPos = $("#dropupbutton").offset();
+          var buttonWidth = $("#dropupbutton").outerWidth();
+          var buttonHeight = $("#dropupbutton").outerHeight();
+          var dialogLeft = buttonPos.left + buttonWidth;
+          var dialogTop = buttonPos.top + buttonHeight - $("#my-dialog").outerHeight();
+          $("#my-dialog").css({
+            left: dialogLeft,
+            top: dialogTop
+          }).show();
+        });
+      // Close the dialog when the close button is clicked
+      $("#my-dialog .close-button").click(function() {
+        $("#my-dialog").hide();
+      });
+    });
+    $(document).ready(function() {
+    	  $('#summernote').summernote();
+    });	
+  </script>
 </body>
 </html>

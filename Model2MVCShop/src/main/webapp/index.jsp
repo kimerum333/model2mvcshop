@@ -12,6 +12,22 @@
 <!-- header include -->
 <!-- spring tiles 필요하대. -->
 <jsp:include page="/layout/header.jsp" flush="false"/>
+<p>main pages</p>
+<p>main pages</p>
+<p>main pages</p>
+<p>main pages</p>
+<p>main pages</p>
+<p>main pages</p>
+<p>main pages</p>
+<p>main pages</p>
+<p>main pages</p>
+<p>main pages</p>
+<p>main pages</p>
+<p>main pages</p>
+<p>main pages</p>
+<p>main pages</p>
+<p>main pages</p>
+<jsp:include page="/layout/footer.jsp" flush="false"/>
 
 </body>
 

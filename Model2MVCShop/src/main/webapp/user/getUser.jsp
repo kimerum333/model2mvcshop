@@ -32,6 +32,7 @@
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
+<jsp:include page="/layout/header.jsp" flush="false"/>
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>

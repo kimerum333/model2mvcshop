@@ -15,6 +15,10 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -179,25 +183,23 @@ public class ProductController {
 		System.out.println("summernoteControl on");
 		//html string 받은것 체크
 		String editordata = request.getParameter("editordata");
-		System.out.println(editordata);
 		
-		//html parsing
-		//String[] base64s; //base64이미지들이 들어갈 배열. writer로 파일로 만들 것이다.
-		//String resourcePath = ""; //이미지파일들을 실제로 저장할 폴더경로. 이미지 db에 넣을것이다.
-		//String uploadingUser = ""; //이미지 DB에 넣을 유저의 ID이다. 
-		
-		//String patternStringBase64Binary = "";
-		
-		//패턴 파싱
-		List<String> imageList = new ArrayList<>();
-        Pattern pattern = Pattern.compile("<img\\s+src=\"([^\"]+)\".*?>");
-        Matcher matcher = pattern.matcher(editordata);
-
-        while (matcher.find()) {
-            String image = matcher.group(1);
-            System.out.println(image);
-            imageList.add(image);
+		//image parse and make lists
+		int imageNo = 0;
+		List<String> images = new ArrayList<>();
+		Document doc = Jsoup.parse(editordata);
+        Elements imgElements = doc.select("img");
+        
+        for (Element img : imgElements) {
+        	String srcAttr = img.attr("src");
+            String[] parts = srcAttr.split(",");
+            String imgString = parts[1];
+            String filename = img.attr("data-filename");
+            images.add(imgString);
+            imageNo++;
+            System.out.println(imageNo+filename+imgString);
         }
+		
 		
 		
 		return null;

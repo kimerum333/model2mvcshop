@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemoMapper">		
+	<resultMap id="memoSelectMap" 		type="memo">
+		<result property="prodNo" 			column="prod_no" 			jdbcType="NUMERIC"/>
+		<result property="prodName"			column="prod_name" 			jdbcType="VARCHAR" />
+		<result property="prodDetail" 		column="prod_detail" 		jdbcType="VARCHAR" />
+		<result property="manuDate" 		column="manufacture_day" 	jdbcType="VARCHAR" />
+		<result property="price" 			column="price" 				jdbcType="NUMERIC" />
+		<result property="fileName" 		column="image_file" 		jdbcType="VARCHAR" />
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
+	</resultMap>
+</mapper>
